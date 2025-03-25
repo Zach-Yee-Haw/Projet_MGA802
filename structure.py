@@ -118,6 +118,6 @@ class Structure:
 
         """
         On retourne les points composant notre structure.
-        :return: Les points composant notre structure.
+        :return: Les points [x, y, x] composant notre structure.
         """
         return self.points
