@@ -14,7 +14,7 @@ from Calcul_Force_EM.Geometrie_fct import *
 
 class Structure:
 
-    def __init__(self, nombre_points=10, longueur_segments_max=1, longueur_segments_min=1, tridimensionnel = True):
+    def __init__(self, nombre_points=10, longueur_segments_max=1, longueur_segments_min=1, tridimensionnel = True, nom = ""):
 
         """
         Cette classe représente les structures que nous voulons générer, puis évaluer.
@@ -32,6 +32,7 @@ class Structure:
         self.force_induit = 0
         self.force_impose = 0
         self.encombrement_max = 0
+        self.nom = nom
 
         # On initialise nos arrays.
         self.points = np.ndarray((self.nombre_points, 3))
@@ -56,6 +57,32 @@ class Structure:
 
         # On génère la structure à partir des longueurs et des angles générés.
         self.generation_structure()
+
+    def __str__(self):
+
+        """
+        Sert à imprimer quelque chose d'utile et de concis.
+        :return: Le nom de l'instance
+        """
+
+        return self.nom
+
+    def __repr__(self):
+
+        """
+        Sert à imprimer quelque chose d'utile et de concis.
+        :return: Le nom de l'instance
+        """
+
+        return self.nom
+
+    def __copy__(self):
+
+        return self
+
+    def copy(self):
+
+        return self
 
     def generation_structure(self):
 
@@ -91,6 +118,14 @@ class Structure:
 
     def montrer_performance(self, induit = True):
 
+
+        """
+        Cette fonction sert à fournir les indices de performance de notre structure.
+        :param induit: Détermine si notre calcul de force est induit ou imposé
+        :return: Nos indices de performance
+        """
+
+
         if induit:
             return self.encombrement_max, self.poids, self.force_induit
         else:
@@ -118,7 +153,7 @@ class Structure:
 
         return valeur
 
-    def modifier_parametres(self, temperature=0.05, longueur = True, angle = True):
+    def modifier_parametres(self, temperature=0.05, longueur = True, angle = True, plus_nom = None):
 
         """
         Cette fonction permet de modifier les caractéristiques de notre structure selon une température définit.
@@ -142,6 +177,10 @@ class Structure:
 
             self.angles[:, 0] = np.mod(self.angles[:, 0] + (np.random.rand(self.nombre_points-1) - 0.5) * 2 * np.pi * temperature, 2 * np.pi)
             self.angles[:, 1] = self.angles[:, 1] + (np.random.rand(self.nombre_points-1) - 0.5) * np.pi * temperature * self.tridimensionnel
+
+
+        # On ajoute une partie au nom pour identifier les racines
+        if plus_nom != None: self.nom = self.nom + "." + plus_nom
 
         # On génère la structure à partir des longueurs et des angles modifiés
         self.generation_structure()

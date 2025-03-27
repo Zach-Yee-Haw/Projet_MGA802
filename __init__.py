@@ -1,10 +1,7 @@
 #scikit sklearn-genetic-opt?
+from apprentissage import apprentissage
 
-from structure import Structure
+print("""À votre information : les barres de progrès fonctionnent moins bien dans un environnement de programmation
+comme Pycharm par rapport à la console de windows.""")
 
-a = Structure(10, 1000, 100, True)
-print(a.points)
-print(a.montrer_performance(False))
-a.modifier_parametres(0.05, True, True)
-print(a.points)
-print(a.montrer_performance(False))
+apprentissage()
