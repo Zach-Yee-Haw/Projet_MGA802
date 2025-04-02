@@ -116,7 +116,7 @@ class Structure:
         self.poids = self.longueur_segments.sum()
         self.evaluer_force()
 
-    def montrer_performance(self, induit = True):
+    def montrer_performance(self, induit = False):
 
 
         """
@@ -153,6 +153,27 @@ class Structure:
 
         return valeur
 
+    def appliquer_limites_aggressif(self, valeur, limite_min, limite_max):
+
+        """
+        Cette fonction sert à prendre une fonction en entrée, à vérifier si elle entre dans le limites et si ce n'est
+        pas le cas, à changer cette valeur afin qu'elle soit égale à la limite.
+        :param valeur: Notre valeur à tester.
+        :param limite_min: Notre limite inférieure.
+        :param limite_max: Notre limite supérieure.
+        :return: Notre valeur qui rentre désormais dans nos limites.
+        """
+
+        if valeur > limite_max:
+
+            valeur = limite_max
+
+        elif valeur < limite_min:
+
+            valeur = limite_min
+
+        return valeur
+
     def modifier_parametres(self, temperature=0.05, longueur = True, angle = True, plus_nom = None):
 
         """
@@ -184,6 +205,30 @@ class Structure:
 
         # On génère la structure à partir des longueurs et des angles modifiés
         self.generation_structure()
+
+    def montrer_parametres(self):
+
+        return self.longueur_segments, self.angles
+
+    def redefinir_parametres(self, params, induit = False, a = 1, b = 1):
+
+
+
+        self.longueur_segments = params[0, :]
+        self.angles[:, 0] = params[1, :]
+        self.angles[:, 1] = params[2, :]
+
+        for i in range(self.nombre_points-1):
+            self.longueur_segments[i] = self.appliquer_limites_aggressif(self.longueur_segments[i],
+                                                                         self.longueur_segments_min,
+                                                                         self.longueur_segments_max)
+
+
+        self.generation_structure()
+
+        encombrement, poids, force = self.montrer_performance(induit)
+
+        return (force/(encombrement**a * poids**b))**-1
 
     def montrer_points(self):
 
@@ -283,7 +328,7 @@ class Structure:
         # %% Calcul de la force de Lorentz générée
         F1a_norm_vector = []
         F1b_norm_vector = []
-        I = 1.5  # Courant imposé dans la câble [A]
+        I = 1.5  # Courant imposé dans le câble [A]
 
         # Diamètre qui varie
         F1a, B1a, F1a_i = fe.Parametre(r, theta, phi, date, INC, TA, self.x, self.y, self.z, None, V, R)  # Cas induit
