@@ -6,9 +6,10 @@ from copy import deepcopy
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 
-def apprentissage(nb_points = 20, longueur_max = 1000, longueur_min = 100, nb_structures_a_garder = 20
-                  , nb_iterations = 50, nb_structures = 100, temperature_debut = 0.5,
-                  temperature_fin = 0.01, tridimensionnel = True, induit = False, a = 0.0, b = 0.0, biais = 4):
+def apprentissage(nb_points = 20, longueur_max = 1000, longueur_min = 100, nb_structures = 10,
+                  nb_structures_a_garder = 4, nb_iterations = 10, temperature_debut = 0.5,
+                  temperature_fin = 0.01, tridimensionnel = True, induit = False, a = 1.0, b = 0.0, biais = 4,
+                  montrer_perf = True):
 
     score_max_cumule = []
     score_min_cumule = []
@@ -25,6 +26,8 @@ def apprentissage(nb_points = 20, longueur_max = 1000, longueur_min = 100, nb_st
 
         structure = St(nb_points, longueur_max, longueur_min, tridimensionnel, "Structure no. " + str(i))
         structures[i, 1] = structure
+
+    meilleure_structure = [0, structures[0, 1]]
 
     for i in range(nb_iterations):
 
@@ -48,6 +51,10 @@ def apprentissage(nb_points = 20, longueur_max = 1000, longueur_min = 100, nb_st
 
         structures_triees = trier(structures, nb_structures)
 
+        if meilleure_structure[0] <= structures_triees[nb_structures-1, 0]:
+
+            meilleure_structure = structures_triees[nb_structures-1, :]
+
         structures_a_garder = choix_biaises(structures_triees, nb_structures_a_garder, biais)
 
         for j in range(nb_structures):
@@ -65,9 +72,16 @@ def apprentissage(nb_points = 20, longueur_max = 1000, longueur_min = 100, nb_st
 
     print("Itération : ", str(i+1), ", score max : ", str(score_max), ", score_min : ", str(score_min))
 
-    plt.plot(range(nb_iterations), score_max_cumule, "-r")
-    plt.plot(range(nb_iterations), score_min_cumule, "-b")
+    if montrer_perf:
 
-    plt.show()
+        plt.plot(range(nb_iterations), score_max_cumule, "-r")
+        plt.plot(range(nb_iterations), score_min_cumule, "-b")
+
+        plt.show()
+
+
+    return meilleure_structure[0], meilleure_structure[1]
+
+
 
 
