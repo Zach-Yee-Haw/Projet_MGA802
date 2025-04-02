@@ -1,6 +1,6 @@
 import numpy as np
-import Satellite 
-import ChampMagnetique as cm
+import Calcul_Force_EM.Satellite as Satellite
+import Calcul_Force_EM.ChampMagnetique as cm
 
 '''
 Ce code contient des fonctions qui permettent de calculer la force électrodynamique
