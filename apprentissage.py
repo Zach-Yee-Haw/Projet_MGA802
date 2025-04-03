@@ -6,9 +6,9 @@ from copy import deepcopy
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 
-def apprentissage(nb_points = 20, longueur_max = 1000, longueur_min = 100, nb_structures = 10,
-                  nb_structures_a_garder = 4, nb_iterations = 10, temperature_debut = 0.5,
-                  temperature_fin = 0.01, tridimensionnel = True, induit = False, a = 1.0, b = 0.0, biais = 4,
+def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_structures = 10,
+                  nb_structures_a_garder = 4, nb_iterations = 20, temperature_debut = 0.5,
+                  temperature_fin = 0.2, tridimensionnel = True, induit = False, a = 0.5, b = 0.5, biais = 4,
                   montrer_perf = True):
 
     score_max_cumule = []

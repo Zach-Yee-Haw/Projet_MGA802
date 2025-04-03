@@ -1,4 +1,5 @@
 #scikit sklearn-genetic-opt?
+#faire UI avec streamlit
 from apprentissage import apprentissage
 from optimisation import optimisation
 from structure import Structure as St
@@ -11,14 +12,15 @@ print("Score : ", score)
 
 enc, poi, force = structure.montrer_performance()
 
-print("Encombrement = ", enc, ", poids = ", poi, ", force = ", force)
+print("Encombrement = ", enc, " m, poids = ", poi, " N, force = ", force, "N.")
 
 structure.visualiser_structure()
 
-structure_optimisee = optimisation(structure)
+score, structure_optimisee = optimisation(structure)
+print("Score : ", score)
 
 enc, poi, force = structure_optimisee.montrer_performance()
 
-print("Encombrement = ", enc, ", poids = ", poi, ", force = ", force)
+print("Encombrement = ", enc, " m, poids = ", poi, " N, force = ", force, "N.")
 
 structure_optimisee.visualiser_structure()

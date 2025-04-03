@@ -33,6 +33,8 @@ class Structure:
         self.force_impose = 0
         self.encombrement_max = 0
         self.nom = nom
+        self.Fx_induit = 0
+        self.Fx_impose = 0
 
         # On initialise nos arrays.
         self.points = np.ndarray((self.nombre_points, 3))
@@ -127,9 +129,9 @@ class Structure:
 
 
         if induit:
-            return self.encombrement_max, self.poids, self.force_induit
+            return self.encombrement_max, self.poids, self.Fx_induit
         else:
-            return self.encombrement_max, self.poids, self.force_impose
+            return self.encombrement_max, self.poids, self.Fx_impose
 
     def appliquer_limites(self, valeur, limite_min, limite_max):
 
@@ -210,13 +212,14 @@ class Structure:
 
         return self.longueur_segments, self.angles
 
-    def redefinir_parametres(self, params, induit = False, a = 1, b = 1):
+    def redefinir_parametres(self, params, induit = False, a = 1, b = 1, tridimensionnel = True):
 
 
 
-        self.longueur_segments = params[0, :]
-        self.angles[:, 0] = params[1, :]
-        self.angles[:, 1] = params[2, :]
+        self.longueur_segments = params[0]
+        for i in range(len(params[1])):
+            self.angles[i, 0] = params[1, i]
+            self.angles[i, 0] = params[2, i]
 
         for i in range(self.nombre_points-1):
             self.longueur_segments[i] = self.appliquer_limites_aggressif(self.longueur_segments[i],
@@ -228,7 +231,9 @@ class Structure:
 
         encombrement, poids, force = self.montrer_performance(induit)
 
-        return (force/(encombrement**a * poids**b))**-1
+        score = (force/(encombrement**a * poids**b))**-3
+
+        return score
 
     def montrer_points(self):
 
@@ -338,6 +343,8 @@ class Structure:
 
         self.force_induite = np.linalg.norm(F1a)
         self.force_impose = np.linalg.norm(F1b)
+        self.Fx_induit = -F1a[0]
+        self.Fx_impose = -F1b[0]
 
         self.F1b_i = F1b_i
         self.B1b = B1b
@@ -352,13 +359,13 @@ class Structure:
         ca.Graph(self.x, self.y, self.z, 'Câble paramétré: Structure générée, cas imposé I = 1.5 A', self.F1b_i,
                  self.B1b)  # Représentation 3D de la courbe
 
-        fig = plt.figure()
-        ax = fig.add_subplot(projection='3d')
-        ax.set_xlabel('X [m]')
-        ax.set_ylabel('Y [m]')
-        ax.set_zlabel('Z [m]')
+        #fig = plt.figure()
+        #ax = fig.add_subplot(projection='3d')
+        #ax.set_xlabel('X [m]')
+        #ax.set_ylabel('Y [m]')
+        #ax.set_zlabel('Z [m]')
         # ax.scatter(0,0,0,'r')
-        ax.scatter(self.x, self.y, self.z, 'b')
-        plt.quiver(self.x, self.y, self.z, self.vect_cable_i[:, 0], self.vect_cable_i[:, 1], self.vect_cable_i[:, 2], length=1.0, normalize=False,
-                   color='blue', label=r'$-\vec{I}$ [A]')
-        plt.legend()
+        #ax.scatter(self.x, self.y, self.z, 'b')
+        #plt.quiver(self.x, self.y, self.z, self.vect_cable_i[:, 0], self.vect_cable_i[:, 1], self.vect_cable_i[:, 2], length=1.0, normalize=False,
+        #           color='blue', label=r'$-\vec{I}$ [A]')
+        #plt.legend()
