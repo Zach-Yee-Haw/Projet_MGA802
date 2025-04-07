@@ -80,10 +80,11 @@ class Structure:
 
     def __copy__(self):
 
-        return self
-
-    def copy(self):
-
+        """
+        Sert à copier la structure. En fait, on utilise deepcopy pour faire cela, mais bon c'est bien d'avoir l'option, au cas où.
+        :return: La structure
+        """
+        
         return self
 
     def generation_structure(self):
@@ -210,28 +211,35 @@ class Structure:
 
     def montrer_parametres(self):
 
+        """
+        Cette fonction sert à montrer les paramètres de la structure afin d'obtenir un point initial pour l'optimisation.
+        :return: les longueurs et les angles des éléments de notre structure.
+        """
+
         return self.longueur_segments, self.angles
 
-    def redefinir_parametres(self, params, induit = False, a = 1, b = 1, tridimensionnel = True):
+    def redefinir_parametres(self, params, induit = False, a = 1, b = 1, tridimensionnel = True, biais = 5):
 
+        """
+        Cette fonction sert à prendre des paramètres en entrée, à générer la structure à partir de ces paramètres puis à
+        l'évaluer selon les critères choisis.
+        :return: le score de la structure
+        """
 
-
+        # On extrait nos ndarrays de longueurs et d'angles à partir des paramètres.
         self.longueur_segments = params[0]
-        for i in range(len(params[1])):
-            self.angles[i, 0] = params[1, i]
-            self.angles[i, 0] = params[2, i]
+        self.angles = params[1:2, :]
 
+        # On s'assure que les longueurs de segments conviennent aux limites que nous avons définies.
         for i in range(self.nombre_points-1):
             self.longueur_segments[i] = self.appliquer_limites_aggressif(self.longueur_segments[i],
                                                                          self.longueur_segments_min,
                                                                          self.longueur_segments_max)
 
-
+        # On génère la structure, puis on évalue son score.
         self.generation_structure()
-
         encombrement, poids, force = self.montrer_performance(induit)
-
-        score = (force/(encombrement**a * poids**b))**-3
+        score = (force/(encombrement**a * poids**b))**-biais
 
         return score
 
