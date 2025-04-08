@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 from tqdm import tqdm
 
 def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_structures = 10,
-                  nb_structures_a_garder = 4, nb_iterations = 20, temperature_debut = 0.5,
+                  nb_structures_a_garder = 4, nb_iterations = 10, temperature_debut = 0.5,
                   temperature_fin = 0.2, tridimensionnel = True, induit = False, a = 0.5, b = 0.5, biais = 4,
                   montrer_perf = True):
 
@@ -31,7 +31,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     montrer_perf (bool): Indique si les performances doivent être affichées.
 
     Retourne:
-    tuple: Le meilleur score et la meilleure structure.
+    tuple: Le meilleur score et la structure ayant obtenu ce score.
     """
 
     # On initialise nos cumuls de score
@@ -58,7 +58,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     meilleure_structure = [0, structures[0, 1]]
 
     # Boucle principale d'optimisation
-    for i in range(nb_iterations):
+    for i in range(nb_iterations+1):
 
         # On calcule la température à utiliser
         temperature = temperature_debut * (i+1) ** exposant_temperature
@@ -66,7 +66,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
         print("Calcul des performances...")
 
         # On calcule le score pour chaque structure
-        for j in tqdm(range(nb_structures)):
+        for j in range(nb_structures):
             scores = structures[j, 1].montrer_performance(induit)
             score = scores[2] / (scores[0] ** a * scores[1] ** b)
 
@@ -89,32 +89,30 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
 
             meilleure_structure = structures_triees[nb_structures-1, :]
 
-        # On sélection les meilleures structures avec biais
-        structures_a_garder = choix_biaises(structures_triees, nb_structures_a_garder, biais)
+        if i < nb_iterations:
+            # On sélectionne les meilleures structures avec biais
+            structures_a_garder = choix_biaises(structures_triees, nb_structures_a_garder, biais)
 
-        # On copie les structures conservées jusqu'à ce qu'il y ait autant de structures par rapport à ce qu'on devrait avoir à chaque itération.
-        for j in range(nb_structures):
+            # On copie les structures conservées jusqu'à ce qu'il y ait autant de structures par rapport à ce qu'on devrait avoir à chaque itération.
+            for j in range(nb_structures):
 
-            structures[j, 1] = structures_a_garder[int(j*proportion_structure_a_garder)].copy()[1]
+                structures[j, 1] = structures_a_garder[int(j*proportion_structure_a_garder)].copy()[1]
 
-        # On modifie les paramètres des structures selon la température définie pour la nouvelle itération
-        for j in tqdm(range(nb_structures)):
+            # On modifie les paramètres des structures selon la température définie pour la nouvelle itération
+            for j in tqdm(range(nb_structures)):
 
-            structure = deepcopy(structures[j, 1])
-            structure.modifier_parametres(temperature, True, True, str(j))
-            structures[j, 1] = structure
+                structure = deepcopy(structures[j, 1])
+                structure.modifier_parametres(temperature, True, True, str(j))
+                structures[j, 1] = structure
 
-        # On mélange les structures
-        structures = melanger_structures(structures, nb_structures)
+            # On mélange les structures
+            structures = melanger_structures(structures, nb_structures)
 
-
-    print("Itération : ", str(i+1), ", score max : ", str(score_max), ", score_min : ", str(score_min))
-
-    # On affiche les performances si demandé
+    # On affiche les performances si demandées
     if montrer_perf:
 
-        plt.plot(range(nb_iterations), score_max_cumule, "-r")
-        plt.plot(range(nb_iterations), score_min_cumule, "-b")
+        plt.plot(range(nb_iterations+1), score_max_cumule, "-r")
+        plt.plot(range(nb_iterations+1), score_min_cumule, "-b")
 
         plt.show()
 
