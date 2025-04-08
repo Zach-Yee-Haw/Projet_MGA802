@@ -8,6 +8,8 @@ comme Pycharm par rapport à la console de windows."""
 
 col1, col2, col3 = st.columns(3)
 
+global stru
+
 with col1:
     nb_points = st.number_input('Nombre de points dans la structure : ', min_value=2, value=31)
     longueur_min = st.number_input('Longueur minimale des segments : ', min_value=0.0, value=100.0)
@@ -23,25 +25,29 @@ with col1:
     b = st.number_input('Importance du poids dans le calcul du score : ', min_value=0.0, value=0.5)
     biais = st.number_input('Biais de sélection des structures : ', min_value=1, value=4)
 
-if st.button('Démarrer apprentissage'):
-    score, structure = apprentissage(nb_points, longueur_max, longueur_min, nb_structures,
-                  nb_structures_a_garder, nb_iterations, temperature_debut,
-                  temperature_fin, tridimensionnel, induit, a, b, biais,
-                  montrer_perf = True)
-    print("Score : ", score)
+with col2:
+    if st.button('Démarrer apprentissage'):
+        score, structure = apprentissage(nb_points, longueur_max, longueur_min, nb_structures,
+                      nb_structures_a_garder, nb_iterations, temperature_debut,
+                      temperature_fin, tridimensionnel, induit, a, b, biais,
+                      colonne = col3)
+        print("Score : ", score)
 
-    enc, poi, force = structure.montrer_performance()
+        enc, poi, force = structure.montrer_performance()
 
-    print("Encombrement = ", enc, " m, poids = ", poi, " N, force = ", force, "N.")
+        print("Encombrement = ", enc, " m, poids = ", poi, " N, force = ", force, "N.")
 
-    structure.visualiser_structure()
+        structure.visualiser_structure(colonne = col3)
+        stru = structure
 
-if st.button('Démarrer optimisation'):
-    score, structure_optimisee = optimisation(structure)
-    print("Score : ", score)
+    if st.button('Démarrer optimisation'):
 
-    enc, poi, force = structure_optimisee.montrer_performance()
+        structure = stru
+        score, structure_optimisee = optimisation(structure, induit, a, b, tridimensionnel, nb_iterations = 20, tolerance = 0.01)
+        print("Score : ", score)
 
-    print("Encombrement = ", enc, " m, poids = ", poi, " N, force = ", force, "N.")
+        enc, poi, force = structure_optimisee.montrer_performance()
 
-    structure_optimisee.visualiser_structure()
+        print("Encombrement = ", enc, " m, poids = ", poi, " N, force = ", force, "N.")
+
+        structure_optimisee.visualiser_structure(colonne=col3)

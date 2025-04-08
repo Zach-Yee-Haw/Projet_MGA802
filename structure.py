@@ -361,14 +361,14 @@ class Structure:
         self.B1b = B1b
         self.vect_cable_i = vect_cable_i
 
-    def visualiser_structure(self):
+    def visualiser_structure(self, colonne = None):
 
         # Rédigé par Dorian Stefan Dumitru
 
         # %% Génération des graphiques
         # Force EM en 3D
         ca.Graph(self.x, self.y, self.z, 'Câble paramétré: Structure générée, cas imposé I = 1.5 A', self.F1b_i,
-                 self.B1b)  # Représentation 3D de la courbe
+                 self.B1b, colonne)  # Représentation 3D de la courbe
 
         #fig = plt.figure()
         #ax = fig.add_subplot(projection='3d')

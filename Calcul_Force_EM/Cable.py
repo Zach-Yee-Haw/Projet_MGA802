@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib
+import streamlit as st
 matplotlib.use('Qt5Agg')
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
@@ -94,7 +95,7 @@ def Liste2Mat(x,y,z):
     return cable
 #______________________________________________________________________________
 
-def Graph(x, y, z, titre=None, F_i=None, B_i=None):
+def Graph(x, y, z, titre=None, F_i=None, B_i=None, colonne = None):
     '''
     Permet de tracer dans un repère 3D un câble défini par des listes de coordonnées
     en afficant les vecteurs du champ magnétique (B) et de la force EM (F_EM)
@@ -154,5 +155,10 @@ def Graph(x, y, z, titre=None, F_i=None, B_i=None):
                   length=100.0, normalize=True, color='green', 
                   label=r'$\vec{B}$ [T]')    
     plt.legend()
-    plt.show()
+
+    if colonne == None:
+        st.pyplot(fig)
+    else:
+        with colonne:
+            st.pyplot(fig)
     return
