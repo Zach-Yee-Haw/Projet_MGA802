@@ -78,7 +78,7 @@ with col2:
         if optimiser == True:
             barre_de_progression.progress(100,text="Optimisation en cours...")
 
-            score, structure_optimisee = optimisation(structure, induit, a, b, tridimensionnel, nb_iterations = nb_iterations_optimisation, tolerance = tolerance)
+            score, structure_optimisee = optimisation(structure, induit, a, b, tridimensionnel, nb_iterations = nb_iterations_optimisation, tolerance = tolerance, barre_de_progression=barre_de_progression)
 
             enc, poi, force = structure_optimisee.montrer_performance()
 

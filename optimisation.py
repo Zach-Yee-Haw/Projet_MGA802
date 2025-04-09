@@ -1,9 +1,18 @@
 import numpy as np
 import scipy as scp
+from functools import partial as pa
 
-def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = True, nb_iterations = 20, tolerance = 0.01, longueur_min = 100, longueur_max = 100):
+iter = 0
+
+def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = True, nb_iterations = 20,
+                 tolerance = 0.01, longueur_min = 100, longueur_max = 100, barre_de_progression = None):
 
     longueurs, angles = structure.montrer_parametres()
+
+
+    iter = 0
+    nb_iter = nb_iterations
+    barre = barre_de_progression
 
     theta = angles[:, 0]
     phi = angles[:, 1]
@@ -14,15 +23,14 @@ def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = 
     params[nb_segments:nb_segments*2] = theta
     params[nb_segments*2:nb_segments*3] = phi
 
-    print("Optimisation par la méthode de Nelder Mead...")
-    resultats = scp.optimize.minimize(structure.redefinir_parametres, params, method='Nelder-Mead', args=(induit, a, b, tridimensionnel), options={'maxiter':nb_iterations, 'disp':False, 'xatol':tolerance})
+    barre.progress(0, text="Calcul des dérivées en cours...")
+
+
+    mettre_bar_a_jour = pa(callback,nb_iter, barre_de_progression)
+
+    resultats = scp.optimize.minimize(structure.redefinir_parametres, params, method='Nelder-Mead', args=(induit, a, b, tridimensionnel), options={'maxiter':nb_iterations, 'disp':False, 'xatol':tolerance}, callback=mettre_bar_a_jour)
 
     x = resultats.get('x')
-
-    print("Paramètres en ce moment :")
-    print(structure.montrer_parametres())
-    print("Paramètres optimaux :")
-    print(x)
 
     structure.redefinir_parametres(x, induit, a, b, tridimensionnel)
 
@@ -30,3 +38,15 @@ def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = 
     score = scores[2] / (scores[0] ** a * scores[1] ** b)
 
     return score, structure
+
+def callback(nb_iter, barre, etat):
+
+    global iter
+
+    print(str(iter), "\n", str(nb_iter))
+    barre.progress(iter/(nb_iter-1), text="Itération : "+str(iter+1)+"/"+str(nb_iter))
+    iter += 1
+
+
+
+
