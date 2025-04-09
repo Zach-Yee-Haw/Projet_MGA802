@@ -1,0 +1,1 @@
+python -m streamlit run .\__init__.py

@@ -1,9 +1,12 @@
 import matplotlib.pyplot as plt
 import matplotlib
+import streamlit as st
+
 matplotlib.use('Qt5Agg')
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
+import plotly as ply
+import plotly.express as px
+import plotly.graph_objects as go
 
 def Resistance(L,S,res):
     '''
@@ -94,7 +97,7 @@ def Liste2Mat(x,y,z):
     return cable
 #______________________________________________________________________________
 
-def Graph(x, y, z, titre=None, F_i=None, B_i=None):
+def Graph(x, y, z, titre=None, F_i=None, B_i=None, colonne = None):
     '''
     Permet de tracer dans un repère 3D un câble défini par des listes de coordonnées
     en afficant les vecteurs du champ magnétique (B) et de la force EM (F_EM)
@@ -154,5 +157,24 @@ def Graph(x, y, z, titre=None, F_i=None, B_i=None):
                   length=100.0, normalize=True, color='green', 
                   label=r'$\vec{B}$ [T]')    
     plt.legend()
-    plt.show()
-    return
+
+    plyfig = go.Figure(data=go.Scatter3d(
+        x=x, y=y, z=z,
+        marker = dict(size = 1,
+                      color = "cyan"),
+        line = dict(color = "cyan",
+                    width = 2),
+        name = "Câble"))
+    plyfig.add_trace(go.Scatter3d(
+        x=[0], y=[0], z=[0],
+        marker = dict(size = 4,
+                      color = "red"),
+        name = "Satellite"))
+
+
+    if colonne == None:
+
+        st.plotly_chart(plyfig)
+    else:
+        with colonne:
+            st.plotly_chart(plyfig)

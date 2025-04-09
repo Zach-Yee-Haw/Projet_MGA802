@@ -1,15 +1,13 @@
 import numpy as np
-from matplotlib.ticker import MaxNLocator
+import streamlit as st
+import plotly.graph_objects as go
 from datetime import datetime
 from math import pi
 from astropy import constants
 
 import Calcul_Force_EM.Force_Electro as fe
-import Calcul_Force_EM.ChampMagnetique as cm
 import Calcul_Force_EM.Cable as ca
-import Calcul_Force_EM.Satellite
 from Calcul_Force_EM.Materiaux import Al_2024
-from Calcul_Force_EM.Cable import *
 from Calcul_Force_EM.Geometrie_fct import *
 
 class Structure:
@@ -33,6 +31,8 @@ class Structure:
         self.force_impose = 0
         self.encombrement_max = 0
         self.nom = nom
+        self.Fx_induit = 0
+        self.Fx_impose = 0
 
         # On initialise nos arrays.
         self.points = np.ndarray((self.nombre_points, 3))
@@ -78,10 +78,11 @@ class Structure:
 
     def __copy__(self):
 
-        return self
-
-    def copy(self):
-
+        """
+        Sert à copier la structure. En fait, on utilise deepcopy pour faire cela, mais bon c'est bien d'avoir l'option, au cas où.
+        :return: La structure
+        """
+        
         return self
 
     def generation_structure(self):
@@ -127,9 +128,9 @@ class Structure:
 
 
         if induit:
-            return self.encombrement_max, self.poids, self.force_induit
+            return self.encombrement_max, self.poids, self.Fx_induit
         else:
-            return self.encombrement_max, self.poids, self.force_impose
+            return self.encombrement_max, self.poids, self.Fx_impose
 
     def appliquer_limites(self, valeur, limite_min, limite_max):
 
@@ -208,27 +209,40 @@ class Structure:
 
     def montrer_parametres(self):
 
+        """
+        Cette fonction sert à montrer les paramètres de la structure afin d'obtenir un point initial pour l'optimisation.
+        :return: les longueurs et les angles des éléments de notre structure.
+        """
+
         return self.longueur_segments, self.angles
 
-    def redefinir_parametres(self, params, induit = False, a = 1, b = 1):
+    def redefinir_parametres(self, params, induit = False, a = 1, b = 1, tridimensionnel = True, biais = 5):
 
+        """
+        Cette fonction sert à prendre des paramètres en entrée, à générer la structure à partir de ces paramètres puis à
+        l'évaluer selon les critères choisis.
+        :return: le score de la structure
+        """
 
+        # On extrait nos ndarrays de longueurs et d'angles à partir des paramètres.
+        nb_segments = self.nombre_points - 1
 
-        self.longueur_segments = params[0, :]
-        self.angles[:, 0] = params[1, :]
-        self.angles[:, 1] = params[2, :]
+        self.longueur_segments = params[0:nb_segments]
+        self.angles[:, 0] = params[nb_segments:nb_segments * 2]
+        self.angles[:, 1] = params[nb_segments * 2:nb_segments * 3]
 
+        # On s'assure que les longueurs de segments conviennent aux limites que nous avons définies.
         for i in range(self.nombre_points-1):
             self.longueur_segments[i] = self.appliquer_limites_aggressif(self.longueur_segments[i],
                                                                          self.longueur_segments_min,
                                                                          self.longueur_segments_max)
 
-
+        # On génère la structure, puis on évalue son score.
         self.generation_structure()
-
         encombrement, poids, force = self.montrer_performance(induit)
+        score = (force/(encombrement**a * poids**b))**-biais
 
-        return (force/(encombrement**a * poids**b))**-1
+        return score
 
     def montrer_points(self):
 
@@ -338,27 +352,24 @@ class Structure:
 
         self.force_induite = np.linalg.norm(F1a)
         self.force_impose = np.linalg.norm(F1b)
+        self.Fx_induit = -F1a[0]
+        self.Fx_impose = -F1b[0]
 
         self.F1b_i = F1b_i
         self.B1b = B1b
         self.vect_cable_i = vect_cable_i
 
-    def visualiser_structure(self):
+    def visualiser_structure(self, plyfig = None, titre = None):
 
-        # Rédigé par Dorian Stefan Dumitru
 
-        # %% Génération des graphiques
-        # Force EM en 3D
-        ca.Graph(self.x, self.y, self.z, 'Câble paramétré: Structure générée, cas imposé I = 1.5 A', self.F1b_i,
-                 self.B1b)  # Représentation 3D de la courbe
+        if plyfig != None:
 
-        fig = plt.figure()
-        ax = fig.add_subplot(projection='3d')
-        ax.set_xlabel('X [m]')
-        ax.set_ylabel('Y [m]')
-        ax.set_zlabel('Z [m]')
-        # ax.scatter(0,0,0,'r')
-        ax.scatter(self.x, self.y, self.z, 'b')
-        plt.quiver(self.x, self.y, self.z, self.vect_cable_i[:, 0], self.vect_cable_i[:, 1], self.vect_cable_i[:, 2], length=1.0, normalize=False,
-                   color='blue', label=r'$-\vec{I}$ [A]')
-        plt.legend()
+            plyfig.add_trace(go.Scatter3d(
+                x=self.x, y=self.y, z=self.z,
+                marker=dict(size=1,
+                            color="cyan"),
+                line=dict(color="cyan",
+                          width=2),
+                name="Câble"))
+
+            plyfig.update_layout(title=titre)
