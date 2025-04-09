@@ -23,7 +23,7 @@ def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = 
     params[nb_segments:nb_segments*2] = theta
     params[nb_segments*2:nb_segments*3] = phi
 
-    barre.progress(0, text="Calcul des dérivées en cours...")
+    barre.progress(0, text="Calcul des dérivées en cours pour l'optimisation de Nelder-Mead...")
 
 
     mettre_bar_a_jour = pa(callback,nb_iter, barre_de_progression)

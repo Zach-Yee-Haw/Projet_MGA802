@@ -68,7 +68,7 @@ with col2:
 
         enc, poi, force = structure.montrer_performance()
 
-        titre = "Score : "+str(score)+", Encombrement = "+str(enc)+" m, poids = "+str(poi)+" N, force = "+str(force)+"N."
+        titre = "Score : "+str(score)+", Encombrement = "+str(enc)+", poids = "+str(poi)+", force = "+str(force)+"."
         structure.visualiser_structure(plyfig=structure_apprentissage_graph, titre=titre)
 
         with espace_apprentissage:
@@ -82,7 +82,7 @@ with col2:
 
             enc, poi, force = structure_optimisee.montrer_performance()
 
-            titre = "Score : "+str(score)+", Encombrement = "+str(enc)+" m, poids = "+str(poi)+" N, force = "+str(force)+"N."
+            titre = "Score : "+str(score)+", Encombrement = "+str(enc)+", poids = "+str(poi)+", force = "+str(force)+"."
 
             structure_optimisee.visualiser_structure(plyfig=structure_optimisee_graph, titre=titre)
 
