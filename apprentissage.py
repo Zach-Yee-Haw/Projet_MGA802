@@ -42,12 +42,16 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     score_max_cumule = []
     score_min_cumule = []
 
+    if espace_graph != None:
+        with espace_graph:
+            st.plotly_chart(plyfig, key="perf")
+
     # On calcule la proportion de structures à garder
     proportion_structure_a_garder = nb_structures_a_garder/nb_structures
     nb_structures = int(nb_structures_a_garder/proportion_structure_a_garder)
     structures = np.ndarray((nb_structures, 2), dtype=object)
 
-    # On calcul l'exposant pour la décroissance de la température
+    # On calcule l'exposant pour la décroissance de la température
     exposant_temperature = math.log(temperature_fin, nb_iterations)
 
     print("Génération des structures...")
@@ -55,7 +59,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     # On génère les structures initiales
     for i in tqdm(range(nb_structures)):
 
-        barre_de_progression.progress(i/(nb_structures-1), text="Itération no. : 0, Progrès : "+str(i)+"/"+str(nb_structures))
+        barre_de_progression.progress(i/(nb_structures-1), text="Itération no. : 0, Progrès : "+str(i+1)+"/"+str(nb_structures))
         structure = St(nb_points, longueur_max, longueur_min, tridimensionnel, "Structure no. " + str(i))
         structures[i, 1] = structure
 
@@ -94,6 +98,27 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
 
             meilleure_structure = structures_triees[nb_structures-1, :]
 
+        # On affiche les performances si demandées
+        if espace_graph != None and plyfig != None:
+
+            plyfig.data = []
+
+            plyfig.add_trace(go.Scatter(
+                x=list(range(nb_iterations + 1)), y=score_max_cumule,
+                marker=dict(size=4, color="red"),
+                line=dict(color="red", width=2),
+                name="Score maximum par itération"))
+
+            plyfig.add_trace(go.Scatter(
+                x=list(range(nb_iterations + 1)), y=score_min_cumule,
+                marker=dict(size=4, color="blue"),
+                line=dict(color="blue", width=2),
+                name="Score minimum par itération"))
+
+
+            with espace_graph:
+                st.plotly_chart(plyfig)
+
         if i < nb_iterations:
             # On sélectionne les meilleures structures avec biais
             structures_a_garder = choix_biaises(structures_triees, nb_structures_a_garder, biais)
@@ -106,7 +131,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
             # On modifie les paramètres des structures selon la température définie pour la nouvelle itération
             for j in tqdm(range(nb_structures)):
 
-                barre_de_progression.progress((j) / (nb_structures-1), text="Itération no. : "+str(i+1)+", Progrès : "+str(j)+"/"+str(nb_structures))
+                barre_de_progression.progress((j) / (nb_structures-1), text="Itération no. : "+str(i+1)+", Progrès : "+str(j+1)+"/"+str(nb_structures))
                 structure = deepcopy(structures[j, 1])
                 structure.modifier_parametres(temperature, True, True, str(j))
                 structures[j, 1] = structure
@@ -114,21 +139,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
             # On mélange les structures
             structures = melanger_structures(structures, nb_structures)
 
-    # On affiche les performances si demandées
-    if espace_graph != None and plyfig != None:
 
-
-        plyfig.add_trace(go.Scatter(
-            x=list(range(nb_iterations + 1)), y=score_max_cumule,
-            marker=dict(size=1, color="red"),
-            line=dict(color="red", width=2),
-            name="Score maximum par itération"))
-
-        plyfig.add_trace(go.Scatter(
-            x=list(range(nb_iterations + 1)), y=score_min_cumule,
-            marker=dict(size=1, color="blue"),
-            line=dict(color="blue", width=2),
-            name="Score minimum par itération"))
 
     return meilleure_structure[0], meilleure_structure[1]
 

@@ -53,7 +53,7 @@ with col1:
     a = st.number_input('Importance de l\'encombrement dans le calcul du score : ', min_value=0.0, value=0.5)
     b = st.number_input('Importance du poids dans le calcul du score : ', min_value=0.0, value=0.5)
     biais = st.number_input('Biais de sélection des structures : ', min_value=1, value=4)
-    optimiser = st.checkbox('Optimiser la structure après l\'apprentissage', value=False)
+    optimiser = st.checkbox('Optimiser la structure après l\'apprentissage', value=True)
     if optimiser == True:
         nb_iterations_optimisation = st.number_input('Nombre d\'itérations d\'optimisation : ', min_value=2, value=20)
         tolerance = st.number_input('Tolérance : ', min_value=0.0, max_value=1.0, value=0.01)
@@ -66,13 +66,10 @@ with col2:
                       plyfig = performances_graph, barre_de_progression = barre_de_progression,
                       espace_graph=espace_performance)
 
-        with espace_performance:
-            st.plotly_chart(performances_graph, key="perf")
-
-        print("Score : ", score)
         enc, poi, force = structure.montrer_performance()
-        print("Encombrement = ", enc, " m, poids = ", poi, " N, force = ", force, "N.")
-        structure.visualiser_structure(plyfig=structure_apprentissage_graph)
+
+        titre = "Score : "+str(score)+", Encombrement = "+str(enc)+" m, poids = "+str(poi)+" N, force = "+str(force)+"N."
+        structure.visualiser_structure(plyfig=structure_apprentissage_graph, titre=titre)
 
         with espace_apprentissage:
             st.plotly_chart(structure_apprentissage_graph, key="appr", use_container_width=False)
@@ -82,13 +79,12 @@ with col2:
             barre_de_progression.progress(100,text="Optimisation en cours...")
 
             score, structure_optimisee = optimisation(structure, induit, a, b, tridimensionnel, nb_iterations = nb_iterations_optimisation, tolerance = tolerance)
-            print("Score : ", score)
 
             enc, poi, force = structure_optimisee.montrer_performance()
 
-            print("Encombrement = ", enc, " m, poids = ", poi, " N, force = ", force, "N.")
+            titre = "Score : "+str(score)+", Encombrement = "+str(enc)+" m, poids = "+str(poi)+" N, force = "+str(force)+"N."
 
-            structure_optimisee.visualiser_structure(plyfig=structure_optimisee_graph)
+            structure_optimisee.visualiser_structure(plyfig=structure_optimisee_graph, titre=titre)
 
             with espace_optimisation:
                 st.plotly_chart(structure_optimisee_graph, key="opti", use_container_width=False)

@@ -359,7 +359,7 @@ class Structure:
         self.B1b = B1b
         self.vect_cable_i = vect_cable_i
 
-    def visualiser_structure(self, plyfig = None):
+    def visualiser_structure(self, plyfig = None, titre = None):
 
 
         if plyfig != None:
@@ -371,3 +371,5 @@ class Structure:
                 line=dict(color="cyan",
                           width=2),
                 name="Câble"))
+
+            plyfig.update_layout(title=titre)
