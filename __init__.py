@@ -91,6 +91,6 @@ with col2:
             structure_optimisee.visualiser_structure(plyfig=structure_optimisee_graph)
 
             with espace_optimisation:
-                st.plotly_chart(structure_optimisee_graph, key="appr", use_container_width=False)
+                st.plotly_chart(structure_optimisee_graph, key="opti", use_container_width=False)
 
         barre_de_progression.progress(100, text="Terminé !")
