@@ -1,15 +1,13 @@
 import numpy as np
-from matplotlib.ticker import MaxNLocator
+import streamlit as st
+import plotly.graph_objects as go
 from datetime import datetime
 from math import pi
 from astropy import constants
 
 import Calcul_Force_EM.Force_Electro as fe
-import Calcul_Force_EM.ChampMagnetique as cm
 import Calcul_Force_EM.Cable as ca
-import Calcul_Force_EM.Satellite
 from Calcul_Force_EM.Materiaux import Al_2024
-from Calcul_Force_EM.Cable import *
 from Calcul_Force_EM.Geometrie_fct import *
 
 class Structure:
@@ -361,22 +359,15 @@ class Structure:
         self.B1b = B1b
         self.vect_cable_i = vect_cable_i
 
-    def visualiser_structure(self, colonne = None):
+    def visualiser_structure(self, plyfig = None):
 
-        # Rédigé par Dorian Stefan Dumitru
 
-        # %% Génération des graphiques
-        # Force EM en 3D
-        ca.Graph(self.x, self.y, self.z, 'Câble paramétré: Structure générée, cas imposé I = 1.5 A', self.F1b_i,
-                 self.B1b, colonne)  # Représentation 3D de la courbe
+        if plyfig != None:
 
-        #fig = plt.figure()
-        #ax = fig.add_subplot(projection='3d')
-        #ax.set_xlabel('X [m]')
-        #ax.set_ylabel('Y [m]')
-        #ax.set_zlabel('Z [m]')
-        # ax.scatter(0,0,0,'r')
-        #ax.scatter(self.x, self.y, self.z, 'b')
-        #plt.quiver(self.x, self.y, self.z, self.vect_cable_i[:, 0], self.vect_cable_i[:, 1], self.vect_cable_i[:, 2], length=1.0, normalize=False,
-        #           color='blue', label=r'$-\vec{I}$ [A]')
-        #plt.legend()
+            plyfig.add_trace(go.Scatter3d(
+                x=self.x, y=self.y, z=self.z,
+                marker=dict(size=1,
+                            color="cyan"),
+                line=dict(color="cyan",
+                          width=2),
+                name="Câble"))

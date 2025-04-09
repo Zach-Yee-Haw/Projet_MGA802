@@ -14,19 +14,6 @@ def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = 
     params[nb_segments:nb_segments*2] = theta
     params[nb_segments*2:nb_segments*3] = phi
 
-    #borne_min = np.zeros_like(params)
-    #borne_max = np.zeros_like(params)
-    #borne_min[0:nb_segments] = longueur_min
-    #borne_max[0:nb_segments] = longueur_max
-    #borne_min[nb_segments:nb_segments*2] = 0
-    #borne_max[nb_segments:nb_segments * 2] = 2*np.pi
-    #borne_min[nb_segments * 2:nb_segments * 3] = -np.pi/2
-    #borne_max[nb_segments * 2:nb_segments * 3] = np.pi / 2
-
-    #bornes = scp.Bounds(lb=borne_min, ub=borne_max)
-
-
-
     print("Optimisation par la méthode de Nelder Mead...")
     resultats = scp.optimize.minimize(structure.redefinir_parametres, params, method='Nelder-Mead', args=(induit, a, b, tridimensionnel), options={'maxiter':nb_iterations, 'disp':False, 'xatol':tolerance})
 

@@ -6,11 +6,12 @@ from extra_fonctions import *
 from copy import deepcopy
 from matplotlib import pyplot as plt
 from tqdm import tqdm
+import plotly.graph_objects as go
 
 def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_structures = 10,
                   nb_structures_a_garder = 4, nb_iterations = 10, temperature_debut = 0.5,
                   temperature_fin = 0.2, tridimensionnel = True, induit = False, a = 0.5, b = 0.5, biais = 4,
-                  colonne = None):
+                  plyfig = None, barre_de_progression = None, espace_graph = None):
 
     """
     Fonction d'apprentissage pour optimiser des structures.
@@ -35,6 +36,8 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     tuple: Le meilleur score et la structure ayant obtenu ce score.
     """
 
+
+
     # On initialise nos cumuls de score
     score_max_cumule = []
     score_min_cumule = []
@@ -52,6 +55,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     # On génère les structures initiales
     for i in tqdm(range(nb_structures)):
 
+        barre_de_progression.progress(i/(nb_structures-1), text="Itération no. : 0, Progrès : "+str(i)+"/"+str(nb_structures))
         structure = St(nb_points, longueur_max, longueur_min, tridimensionnel, "Structure no. " + str(i))
         structures[i, 1] = structure
 
@@ -102,6 +106,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
             # On modifie les paramètres des structures selon la température définie pour la nouvelle itération
             for j in tqdm(range(nb_structures)):
 
+                barre_de_progression.progress((j) / (nb_structures-1), text="Itération no. : "+str(i+1)+", Progrès : "+str(j)+"/"+str(nb_structures))
                 structure = deepcopy(structures[j, 1])
                 structure.modifier_parametres(temperature, True, True, str(j))
                 structures[j, 1] = structure
@@ -110,14 +115,20 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
             structures = melanger_structures(structures, nb_structures)
 
     # On affiche les performances si demandées
-    if colonne != None:
-        fig = plt.figure()
-        plt.plot(range(nb_iterations+1), score_max_cumule, "-r")
-        plt.plot(range(nb_iterations+1), score_min_cumule, "-b")
+    if espace_graph != None and plyfig != None:
 
-        with colonne:
-            st.pyplot(fig)
 
+        plyfig.add_trace(go.Scatter(
+            x=list(range(nb_iterations + 1)), y=score_max_cumule,
+            marker=dict(size=1, color="red"),
+            line=dict(color="red", width=2),
+            name="Score maximum par itération"))
+
+        plyfig.add_trace(go.Scatter(
+            x=list(range(nb_iterations + 1)), y=score_min_cumule,
+            marker=dict(size=1, color="blue"),
+            line=dict(color="blue", width=2),
+            name="Score minimum par itération"))
 
     return meilleure_structure[0], meilleure_structure[1]
 

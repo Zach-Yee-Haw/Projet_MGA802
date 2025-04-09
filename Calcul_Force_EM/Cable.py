@@ -1,10 +1,12 @@
 import matplotlib.pyplot as plt
 import matplotlib
 import streamlit as st
+
 matplotlib.use('Qt5Agg')
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
+import plotly as ply
+import plotly.express as px
+import plotly.graph_objects as go
 
 def Resistance(L,S,res):
     '''
@@ -156,9 +158,23 @@ def Graph(x, y, z, titre=None, F_i=None, B_i=None, colonne = None):
                   label=r'$\vec{B}$ [T]')    
     plt.legend()
 
+    plyfig = go.Figure(data=go.Scatter3d(
+        x=x, y=y, z=z,
+        marker = dict(size = 1,
+                      color = "cyan"),
+        line = dict(color = "cyan",
+                    width = 2),
+        name = "Câble"))
+    plyfig.add_trace(go.Scatter3d(
+        x=[0], y=[0], z=[0],
+        marker = dict(size = 4,
+                      color = "red"),
+        name = "Satellite"))
+
+
     if colonne == None:
-        st.pyplot(fig)
+
+        st.plotly_chart(plyfig)
     else:
         with colonne:
-            st.pyplot(fig)
-    return
+            st.plotly_chart(plyfig)
