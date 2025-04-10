@@ -7,7 +7,7 @@ iter = 0
 def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = True, nb_iterations = 20,
                  tolerance = 0.01, longueur_min = 100, longueur_max = 100, barre_de_progression = None):
 
-    global iter
+
 
     longueurs, angles = structure.montrer_parametres()
 
