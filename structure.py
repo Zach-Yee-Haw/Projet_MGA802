@@ -228,7 +228,7 @@ class Structure:
         nb_segments = self.nombre_points - 1
 
         self.longueur_segments = params[0:nb_segments]
-        self.angles[:, 0] = params[nb_segments:nb_segments * 2]
+        self.angles[:, 0] = tridimensionnel*params[nb_segments:nb_segments * 2]
         self.angles[:, 1] = params[nb_segments * 2:nb_segments * 3]
 
         # On s'assure que les longueurs de segments conviennent aux limites que nous avons définies.

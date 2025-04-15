@@ -11,7 +11,7 @@ import plotly.graph_objects as go
 def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_structures = 10,
                   nb_structures_a_garder = 4, nb_iterations = 10, temperature_debut = 0.5,
                   temperature_fin = 0.2, tridimensionnel = True, induit = False, a = 0.5, b = 0.5, biais = 4,
-                  plyfig = None, barre_de_progression = None, espace_graph = None):
+                  plyfig = None, barre_de_progression = None, espace_graph = None, figure = None, espace_structure = None):
 
     """
     Fonction d'apprentissage pour optimiser des structures.
@@ -97,6 +97,24 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
         if meilleure_structure[0] <= structures_triees[nb_structures-1, 0]:
 
             meilleure_structure = structures_triees[nb_structures-1, :]
+
+        enc, poi, force = meilleure_structure[1].montrer_performance()
+        titre = ("Score : " + str(meilleure_structure[0]) + ", Encombrement = " + str(enc) + ", poids = " + str(poi) +
+                 ", force = " + str(force) + ".")
+
+
+
+        figure.data = []
+
+        figure.add_trace(go.Scatter3d(
+            x=[0], y=[0], z=[0],
+            marker=dict(size=4,
+                        color="red"),
+                        name="Satellite"))
+
+        meilleure_structure[1].visualiser_structure(figure, titre)
+        with espace_structure:
+            st.plotly_chart(figure, key = "appr"+str(i), use_container_width=False)
 
         # On affiche les performances si demandées
         if espace_graph != None and plyfig != None:
