@@ -4,7 +4,6 @@ from apprentissage import apprentissage
 from optimisation import optimisation
 from structure import Structure as St
 import plotly as ply
-import plotly.express as px
 import plotly.graph_objects as go
 
 st.set_page_config(layout="wide")
@@ -60,25 +59,32 @@ with col1:
 
 with col2:
     if st.button('Démarrer apprentissage'):
+
+        with espace_apprentissage:
+            st.plotly_chart(structure_apprentissage_graph, key="appr", use_container_width=False)
+
         score, structure = apprentissage(nb_points, longueur_max, longueur_min, nb_structures,
                       nb_structures_a_garder, nb_iterations, temperature_debut,
                       temperature_fin, tridimensionnel, induit, a, b, biais,
                       plyfig = performances_graph, barre_de_progression = barre_de_progression,
-                      espace_graph=espace_performance)
+                      espace_graph=espace_performance, figure=structure_apprentissage_graph, espace_structure=espace_apprentissage)
 
         enc, poi, force = structure.montrer_performance()
+        titre = "Score : " + str(score) + ", Encombrement = " + str(enc) + ", poids = " + str(poi) + ", force = " + str(
+            force) + "."
 
-        titre = "Score : "+str(score)+", Encombrement = "+str(enc)+", poids = "+str(poi)+", force = "+str(force)+"."
         structure.visualiser_structure(plyfig=structure_apprentissage_graph, titre=titre)
-
         with espace_apprentissage:
-            st.plotly_chart(structure_apprentissage_graph, key="appr", use_container_width=False)
+            st.plotly_chart(structure_apprentissage_graph, use_container_width=False)
 
 
         if optimiser == True:
             barre_de_progression.progress(100,text="Optimisation en cours...")
 
-            score, structure_optimisee = optimisation(structure, induit, a, b, tridimensionnel, nb_iterations = nb_iterations_optimisation, tolerance = tolerance, barre_de_progression=barre_de_progression)
+            score, structure_optimisee = optimisation(structure, induit, a, b, tridimensionnel, nb_iterations =
+                                                        nb_iterations_optimisation, tolerance = tolerance,
+                                                        barre_de_progression=barre_de_progression,
+                                                        figure=structure_optimisee_graph, espace=espace_optimisation)
 
             enc, poi, force = structure_optimisee.montrer_performance()
 
