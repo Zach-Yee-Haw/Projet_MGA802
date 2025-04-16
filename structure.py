@@ -15,13 +15,17 @@ class Structure:
     def __init__(self, nombre_points=10, longueur_segments_max=1, longueur_segments_min=1, tridimensionnel = True, nom = ""):
 
         """
+        Initialisation de la classe Structure.
         Cette classe représente les structures que nous voulons générer, puis évaluer.
-        :param nombre_points: On choisit le nombre de nœuds que nous voulons trouver dans la structure.
-        :param longueur_segments_max: On choisit la longueur maximale que nos segments pourront prendre.
-        :param longueur_segments_min:  On choisit la longueur minimale que nos segments pourront prendre.
+
+        :param nombre_points: Nombre de nœuds dans la structure.
+        :param longueur_segments_max: Longueur maximale des segments.
+        :param longueur_segments_min: Longueur minimale des segments.
+        :param tridimensionnel: Indique si la structure est en 3D ou non.
+        :param nom: Nom de l'instance de la structure.
         """
 
-        # On définit nos paramètres.
+        # Initialisation des paramètres principaux de la structure
         self.nombre_points = nombre_points
         self.longueur_segments_max = longueur_segments_max
         self.longueur_segments_min = longueur_segments_min
@@ -34,46 +38,42 @@ class Structure:
         self.Fx_induit = 0
         self.Fx_impose = 0
 
-        # On initialise nos arrays.
+        # Initialisation des tableaux pour stocker les propriétés géométriques
         self.points = np.ndarray((self.nombre_points, 3))
         self.angles = np.ndarray((self.nombre_points - 1, 2))
         self.longueur_segments = np.ndarray(self.nombre_points - 1)
         self.encombrements = np.zeros_like(self.longueur_segments)
 
-        # Si l'utilisateur n'entre pas de bonnes valeurs limites, on lève une erreur.
+        # Validation des longueurs minimales et maximales
         if self.longueur_segments_min > self.longueur_segments_max or self.longueur_segments_min <= 0:
 
             raise Exception("La longueur minimale doit être plus grande que zéro et elle doit être plus courte ou égale à la longueur maximale.")
 
-        # On définit une valeur aléatoire de théta (0 < theta < 2*pi) et phi (–pi/2 < phi < pi/2) pour chaque segment.
+        # Génération aléatoire des angles theta (azimutal) et phi (élévation)
         self.angles[:, 0] = np.random.rand(self.nombre_points - 1) * 2 * np.pi
         self.angles[:, 1] = (np.random.rand(self.nombre_points - 1) - 0.5) * np.pi * self.tridimensionnel
 
-        # On définit une valeur aléatoire de longueur pour chaque segment.
+        # Génération aléatoire des longueurs de segments dans les limites définies
         self.longueur_segments[:] = np.random.rand(self.nombre_points - 1) * (self.longueur_segments_max - self.longueur_segments_min) + self.longueur_segments_min
 
-        # On initialise notre point initial à [0, 0, 0].
+        # Initialisation du premier point à l'origine
         self.points[0, :] = [0, 0, 0]
 
-        # On génère la structure à partir des longueurs et des angles générés.
+        # Génération de la structure
         self.generation_structure()
 
     def __str__(self):
 
         """
-        Sert à imprimer quelque chose d'utile et de concis.
-        :return: Le nom de l'instance
+        Permet de représenter une instance par son nom dans les impressions.
         """
-
         return self.nom
 
     def __repr__(self):
 
         """
-        Sert à imprimer quelque chose d'utile et de concis.
-        :return: Le nom de l'instance
+        Représentation concise pour les impressions.
         """
-
         return self.nom
 
     def __copy__(self):
@@ -361,7 +361,11 @@ class Structure:
 
     def visualiser_structure(self, plyfig = None, titre = None):
 
-
+        """
+        On ajoute un tracé 3D de notre structure à la figure désirée.
+        :param plyfig: Figure sur laquelle nous voulons tracer.
+        :paam titre: Titre que nous voulons donner à notre structure.
+        """
         if plyfig != None:
 
             plyfig.add_trace(go.Scatter3d(
