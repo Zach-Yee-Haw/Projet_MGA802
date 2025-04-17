@@ -15,23 +15,22 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     """
     Fonction d'apprentissage pour optimiser des structures.
 
-    nb_points (int): Nombre de points par structure.
-    longueur_max (int): Longueur maximale des segments d'une structure.
-    longueur_min (int): Longueur minimale des segments d'une structure.
-    nb_structures (int): Nombre total de structures à générer.
-    nb_structures_a_garder (int): Nombre de structures à garder après chaque itération.
-    nb_iterations (int): Nombre total d'itérations pour l'apprentissage.
-    temperature_debut (float): Température initiale pour l'ajustement des paramètres.
-    temperature_fin (float): Température finale pour l'ajustement des paramètres.
-    tridimensionnel (bool): Indique si les structures sont tridimensionnelles.
-    induit (bool): Indique si le champs magnétique est induit ou imposé.
-    a (float): Exposant pour le score (encombrement).
-    b (float): Exposant pour le score (poids).
-    biais (int): Facteur de biais pour le choix des structures.
-    montrer_perf (bool): Indique si les performances doivent être affichées.
+    :param nb_points: Nombre de points par structure.
+    :param longueur_max: Longueur maximale des segments d'une structure.
+    :param longueur_min: Longueur minimale des segments d'une structure.
+    :param nb_structures: Nombre total de structures à générer.
+    :param nb_structures_a_garder: Nombre de structures à garder après chaque itération.
+    :param nb_iterations: Nombre total d'itérations pour l'apprentissage.
+    :param temperature_debut: Température initiale pour l'ajustement des paramètres.
+    :param temperature_fin: Température finale pour l'ajustement des paramètres.
+    :param tridimensionnel: Indique si les structures sont tridimensionnelles.
+    :param induit: Indique si le champs magnétique est induit ou imposé.
+    :param a: Exposant pour le score (encombrement).
+    :param b: Exposant pour le score (poids).
+    :param biais: Facteur de biais pour le choix des structures.
+    :param montrer_perf: Indique si les performances doivent être affichées.
 
-    Returns:
-        tuple: Le meilleur score et la structure ayant obtenu ce score.
+    :return: Le meilleur score et la structure ayant obtenu ce score.
     """
     # Initialisation des variables pour les scores cumulés
     score_max_cumule = []

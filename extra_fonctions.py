@@ -9,8 +9,7 @@ def choix_biaises(liste_de_choix, nb_de_choix, biais):
     :param nb_de_choix: Nombre d'éléments à sélectionner.
     :param biais: Facteur de biais pour influencer les choix (plus bas, plus les premiers éléments sont favorisés).
     
-    Returns:
-        choix: Liste des éléments sélectionnés avec biais.
+    :return: Liste des éléments sélectionnés avec biais.
     """
     choix = []  # Liste pour stocker les choix effectués
     liste_de_choix_modifiee = []  # Copie modifiable de la liste de choix
@@ -38,8 +37,7 @@ def trier(structures, nb_structures):
     :param structures: Tableau contenant les scores et les structures associées.
     :param nb_structures: Nombre de structures à trier.
     
-    Returns:
-        structures_triees: Tableau trié des structures.
+    :return: Tableau trié des structures.
     """
     # Obtient les indices pour trier les structures par score croissant
     triage = structures[:, 0].argsort()
@@ -61,8 +59,7 @@ def melanger_structures(structures, nb_structures):
     :param structures: Tableau contenant les structures et leurs scores.
     :param nb_structures: Nombre de structures à mélanger.
     
-    Returns:
-        nouvelle_liste: Nouveau tableau contenant les structures mélangées.
+    :return: Nouveau tableau contenant les structures mélangées.
     """
     # Génère des indices aléatoires pour mélanger les structures
     indices_aleatoires = choix_biaises(range(nb_structures), nb_structures, 1)

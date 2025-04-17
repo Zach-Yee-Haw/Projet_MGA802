@@ -76,6 +76,7 @@ class Structure:
     def __copy__(self):
         """
         Sert à copier la structure. En fait, on utilise deepcopy pour faire cela, mais bon c'est bien d'avoir l'option, au cas où.
+
         :return: La structure
         """
         return self
@@ -83,6 +84,7 @@ class Structure:
     def generation_structure(self):
         """
         À partir des angles et des longueurs de segments que nous avons générés, nous trouvons les points qui les composent.
+
         :return: Une liste de points composant notre structure.
         """
         '''
@@ -113,7 +115,9 @@ class Structure:
     def montrer_performance(self, induit = False):
         """
         Cette fonction sert à fournir les indices de performance de notre structure.
+
         :param induit: Détermine si notre calcul de force est induit ou imposé
+
         :return: Nos indices de performance
         """
         if induit:
@@ -126,9 +130,11 @@ class Structure:
         Cette fonction sert à prendre une fonction en entrée, à vérifier si elle entre dans le limites et si ce n'est
         pas le cas, à changer cette valeur afin qu'elle entre dans les limite avec la même différence qu'elle avait en
         y sortant.
+
         :param valeur: Notre valeur à tester.
         :param limite_min: Notre limite inférieure.
         :param limite_max: Notre limite supérieure.
+
         :return: Notre valeur qui rentre désormais dans nos limites.
         """
         if valeur > limite_max:
@@ -145,9 +151,11 @@ class Structure:
         """
         Cette fonction sert à prendre une fonction en entrée, à vérifier si elle entre dans le limites et si ce n'est
         pas le cas, à changer cette valeur afin qu'elle soit égale à la limite.
+
         :param valeur: Notre valeur à tester.
         :param limite_min: Notre limite inférieure.
         :param limite_max: Notre limite supérieure.
+
         :return: Notre valeur qui rentre désormais dans nos limites.
         """
         if valeur > limite_max:
@@ -163,6 +171,7 @@ class Structure:
     def modifier_parametres(self, temperature=0.05, longueur = True, angle = True, plus_nom = None):
         """
         Cette fonction permet de modifier les caractéristiques de notre structure selon une température définit.
+
         :param temperature: Cette variable permet de choisir l'ampleur de la variation selon laquelle nos structures vont changer.
         :param longueur: Cette variable décide si l'on veut faire varier les longueurs.
         :param angle: Cette variable décide si l'on veut faire varier les angles.
@@ -193,6 +202,7 @@ class Structure:
     def montrer_parametres(self):
         """
         Cette fonction sert à montrer les paramètres de la structure afin d'obtenir un point initial pour l'optimisation.
+
         :return: les longueurs et les angles des éléments de notre structure.
         """
         return self.longueur_segments, self.angles
@@ -201,6 +211,7 @@ class Structure:
         """
         Cette fonction sert à prendre des paramètres en entrée, à générer la structure à partir de ces paramètres puis à
         l'évaluer selon les critères choisis.
+
         :return: le score de la structure
         """
         # On extrait nos ndarrays de longueurs et d'angles à partir des paramètres.
@@ -226,6 +237,7 @@ class Structure:
     def montrer_points(self):
         """
         On retourne les points composant notre structure.
+
         :return: Les points [x, y, x] composant notre structure.
         """
         return self.points
@@ -342,6 +354,7 @@ class Structure:
     def visualiser_structure(self, plyfig = None, titre = None):
         """
         On ajoute un tracé 3D de notre structure à la figure désirée.
+
         :param plyfig: Figure sur laquelle nous voulons tracer.
         :param titre: Titre que nous voulons donner à notre structure.
         """
