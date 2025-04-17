@@ -1,9 +1,7 @@
-#scikit sklearn-genetic-opt?
 import streamlit as st
 from apprentissage import apprentissage
 from optimisation import optimisation
 from structure import Structure as St
-import plotly as ply
 import plotly.graph_objects as go
 
 # Configuration de la mise en page de Streamlit

@@ -1,1 +1,1 @@
-python -m streamlit run .\__init__.py
+python -m streamlit run .\main.py
