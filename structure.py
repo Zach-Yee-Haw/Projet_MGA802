@@ -380,7 +380,7 @@ class Structure:
         nom = nom_a_donner
 
         # Si aucun nom n'est donné, on en génère un
-        if nom = None:
+        if nom == None:
             nom = "Structure " + str(datetime.now()) + ".csv"
 
         # Génération du chemin
