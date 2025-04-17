@@ -119,5 +119,11 @@ with col2:
             with espace_optimisation:
                 st.plotly_chart(structure_optimisee_graph, key="opti", use_container_width=False)
 
-        # Mettre à jour la barre de progression pour indiquer la fin du processus
+        # Mettre à jour la barre de progression pour indiquer l'enregistrement'
+        barre_de_progression.progress(100, text="Enregistrement en cours...")
+
+        # Enregistrement de la structure
+        structure_optimisee.sauvegarde()
+
+        # Mettre à jour la barre de progression pour indiquer la fin'
         barre_de_progression.progress(100, text="Terminé !")

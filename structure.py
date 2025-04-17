@@ -369,3 +369,25 @@ class Structure:
                 name="Câble"))
 
             plyfig.update_layout(title=titre)
+
+    def sauvegarde(self, fichier = "./structures", nom_a_donner = None, delimiteur = ","):
+        """
+        Sert à sauvegarder les points définissant la structure.
+
+        :param fichier: chemin du fichier.
+        """
+        # Initialisatin du nom
+        nom = nom_a_donner
+
+        # Si aucun nom n'est donné, on en génère un
+        if nom = None:
+            nom = "Structure " + str(datetime.now()) + ".csv"
+
+        # Génération du chemin
+        chemin = fichier + "/" + nom
+
+        # Génération des points
+        points = self.montrer_points()
+
+        # Sauvegarde de la sructure
+        np.savetxt(chemin, points, delimiter=delimiteur)
