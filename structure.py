@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 from datetime import datetime
 from math import pi
 from astropy import constants
+import os
 
 import Calcul_Force_EM.Force_Electro as fe
 import Calcul_Force_EM.Cable as ca
@@ -370,7 +371,7 @@ class Structure:
 
             plyfig.update_layout(title=titre)
 
-    def sauvegarde(self, fichier = "./structures", nom_a_donner = None, delimiteur = ","):
+    def sauvegarde(self, dossier = "\\structures", nom_a_donner = None, delimiteur = ","):
         """
         Sert à sauvegarder les points définissant la structure.
 
@@ -381,13 +382,14 @@ class Structure:
 
         # Si aucun nom n'est donné, on en génère un
         if nom == None:
-            nom = "Structure " + str(datetime.now()) + ".csv"
-
-        # Génération du chemin
-        chemin = fichier + "/" + nom
+            date = str(datetime.now())
+            date = date.replace(" ", "_")
+            date = date.replace(".", "_")
+            date = date.replace(":", "-")
+            nom = "Structure_" + date + ".csv"
 
         # Génération des points
         points = self.montrer_points()
 
         # Sauvegarde de la sructure
-        np.savetxt(chemin, points, delimiter=delimiteur)
+        np.savetxt(nom, points, delimiter=delimiteur)
