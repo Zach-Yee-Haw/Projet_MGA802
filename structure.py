@@ -371,13 +371,13 @@ class Structure:
 
             plyfig.update_layout(title=titre)
 
-    def sauvegarde(self, dossier = "\\structures", nom_a_donner = None, delimiteur = ","):
+    def sauvegarde(self, nom_a_donner = None, delimiteur = ","):
         """
         Sert à sauvegarder les points définissant la structure.
 
         :param fichier: chemin du fichier.
         """
-        # Initialisatin du nom
+        # Initialisation du nom
         nom = nom_a_donner
 
         # Si aucun nom n'est donné, on en génère un

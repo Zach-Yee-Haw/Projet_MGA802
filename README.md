@@ -1,7 +1,5 @@
 # Projet_MGA802
-
 ## Description du Projet
-
 Ce projet, développé dans le cadre du cours **MGA802**, vise à optimiser des structures permettant de ralentir des satellites en phase de désorbitage en utilisant des algorithmes d'apprentissage et d'optimisation. 
 Le code combine des techniques de génération, d'évaluation et d'amélioration de structures en fonction de critères spécifiques, tels que l'encombrement, le poids et la force. 
 L'objectif principal est de produire des structures performantes selon les pondérations définies par l'utilisateur.
@@ -9,7 +7,6 @@ L'objectif principal est de produire des structures performantes selon les pond�
 ---
 
 ## Objectifs du Code
-
 1. **Apprentissage des structures** : Générer et évaluer un ensemble de structures à travers plusieurs itérations d'apprentissage. Les meilleures structures sont conservées et modifiées pour itérer vers des solutions optimales.
 2. **Optimisation des structures** : Améliorer une structure donnée à l'aide de l'algorithme Nelder-Mead pour maximiser les performances spécifiques (force, encombrement, poids).
 3. **Visualisation** : Offrir une interface utilisateur interactive (via Streamlit) pour suivre les performances, visualiser les structures et évaluer les résultats.
@@ -17,23 +14,14 @@ L'objectif principal est de produire des structures performantes selon les pond�
 ---
 
 ## Comment Utiliser le Code
-
 ### Prérequis
+**Python** : Assurez-vous que Python 3.8 ou une version ultérieure est installé.
 
-1. **Python** : Assurez-vous que Python 3.8 ou une version ultérieure est installé.
-2. **Bibliothèques nécessaires** :
-   - `numpy`
-   - `scipy`
-   - `streamlit`
-   - `plotly`
-   - `matplotlib`
-   - `tqdm`
+      Installez les bibliothèques avec la commande suivante :
 
-   Installez les bibliothèques avec la commande suivante :
-   ```bash
-   python -m pip install -r requirements.txt
-Étapes pour Lancer le Projet
+        python -m pip install -r requirements.txt
 
+## Étapes pour Lancer le Projet
 - Cloner le dépôt :
 
       git clone https://github.com/Zach-Yee-Haw/Projet_MGA802.git
@@ -41,7 +29,9 @@ L'objectif principal est de produire des structures performantes selon les pond�
 
 - Lancer l'application Streamlit :
 
-      streamlit run __init__.py
+  - Ouvrez le fichier run.bat ou bien tapez la commande suivante :
+
+        streamlit run __init__.py
   
 - Configurer les paramètres via l'interface utilisateur :
 
@@ -53,8 +43,7 @@ L'objectif principal est de produire des structures performantes selon les pond�
 
   - Suivre les graphiques et les visualisations en 3D directement dans l'application Streamlit.
     
-# Stratégie Adoptée pour la Structure du Code
-
+## Stratégie Adoptée pour la Structure du Code
 Le code est organisé en plusieurs modules pour garantir la modularité et la lisibilité :
 
 - apprentissage.py :
@@ -80,8 +69,7 @@ Le code est organisé en plusieurs modules pour garantir la modularité et la li
   - Point d'entrée principal du projet.
   - Configure l'interface utilisateur Streamlit pour permettre une interaction simple avec les différentes fonctionnalités du projet.
     
-# Fonctionnalités Clés
-
+## Fonctionnalités Clés
 - Apprentissage :
 
   - Génération de structures aléatoires avec des paramètres personnalisés.
@@ -98,10 +86,18 @@ Le code est organisé en plusieurs modules pour garantir la modularité et la li
   - Paramètres facilement ajustables via Streamlit.
   - Visualisation 3D des structures en cours d'apprentissage ou d'optimisation.
 
-# Contributions
-- Personellement, je ne compte pas participer à d'autres modifications de ce projet.
-- Cependant, vous pouvez faire ce que vous voulez dans une version clônée du projet.
+## Contributions
+- Personnellement, je ne compte pas participer à d'autres modifications de ce projet.
+- Cependant, vous pouvez faire ce que vous voulez dans une version clonée du projet.
+- Ce qu'il reste à faire :
 
-# Licence
+  - Vectoriser le calcul de force avec numpy dans structure.py.
+  - Permettre à l’utilisateur de choisir une autre méthode d’optimisation.
+  - Permettre à l’utilisateur de définir le matériau de la structure.
+  - Améliorer l’interface (bloquer entrées, montrer meilleure structure de chaque itération, mettre plus d’informations, etc.).
+  - Permettre à l’utilisateur de générer des boucles ou des embranchements.
 
+## Licence
 Ce projet est sous licence MIT. Vous êtes libre de l'utiliser, de le modifier et de le partager.
+
+NB : Les commentaires et la documentation ont été rédigés avec l'assistance de la SIAG Microsoft Copilot.
