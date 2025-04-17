@@ -12,17 +12,28 @@ def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = 
     Fonction pour optimiser les paramètres d'une structure donnée en utilisant l'algorithme de Nelder-Mead.
 
     :param structure: Structure à optimiser.
+    :type structure: Structure
     :param induit: Indique si le champs magnétique est induit ou imposé.
+    :type induit: bool
     :param a: Importance du critère d'encombrement.
+    :type a: float
     :param b: Importance du critère de poids.
+    :type b: float
     :param tridimensionnel: Indique si l'optimisation est en 3D.
+    :type tridimensionnel: bool
     :param nb_iterations: Nombre maximal d'itérations.
+    :type nb_iterations: int
     :param tolerance: Tolérance pour la convergence.
+    :type tolerance: float
     :param barre_de_progression: Barre de progression Streamlit.
+    :type barre_de_progression: barre de progression streamlit
     :param figure: Figure plotly servant à afficher la structure.
+    :type figure: figure plotly
     :param espace: Espace Streamlit pour afficher la structure.
+    :type espace: espace streamlit
 
     :return: Score final et structure optimisée.
+    :rtype: tuple
     """
     # Définition des paramètres globaux
     global structure_temp
@@ -74,12 +85,19 @@ def callback(nb_iter, barre, figure, espace, a, b, etat):
     et visualiser l'état actuel de la structure.
     
     :param nb_iter: Nombre total d'itérations.
+    :type nb_iter: int
     :param barre: Composant Streamlit pour afficher la progression.
+    :type barre: barre de progression streamlit
     :param figure: Figure plotly pour afficher la structure.
+    :type figure: figure plotly
     :param espace: Espace Streamlit pour afficher la structure.
-    :param a (float): Importance du critère d'encombrement.
-    :param b (float): Importance du critère de poids.
+    :type espace: espace streamlit
+    :param a: Importance du critère d'encombrement.
+    :type a: float
+    :param b: Importance du critère de poids.
+    :type b: float
     :param etat: État actuel des paramètres.
+    :type etat: ndarray
     """
     global structure_temp
     global iter

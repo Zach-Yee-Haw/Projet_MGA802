@@ -4,7 +4,6 @@ import plotly.graph_objects as go
 from datetime import datetime
 from math import pi
 from astropy import constants
-import os
 
 import Calcul_Force_EM.Force_Electro as fe
 import Calcul_Force_EM.Cable as ca
@@ -19,10 +18,15 @@ class Structure:
         Cette classe représente les structures que nous voulons générer, puis évaluer.
 
         :param nombre_points: Nombre de nœuds dans la structure.
+        :type nombre_points: int
         :param longueur_segments_max: Longueur maximale des segments.
+        :type longueur_segments_max: float
         :param longueur_segments_min: Longueur minimale des segments.
+        :type longueur_segments_min: float
         :param tridimensionnel: Indique si la structure est en 3D ou non.
+        :type tridimensionnel: bool
         :param nom: Nom de l'instance de la structure.
+        :type nom: str
         """
 
         # Initialisation des paramètres principaux de la structure
@@ -79,6 +83,7 @@ class Structure:
         Sert à copier la structure. En fait, on utilise deepcopy pour faire cela, mais bon c'est bien d'avoir l'option, au cas où.
 
         :return: La structure
+        :rtype: Structure
         """
         return self
 
@@ -87,6 +92,7 @@ class Structure:
         À partir des angles et des longueurs de segments que nous avons générés, nous trouvons les points qui les composent.
 
         :return: Une liste de points composant notre structure.
+        :rtype: ndarray
         """
         '''
         À partir de [0, 0, 0], on additionne les coordonnées sphériques calculées à partir des longueurs et les angles générés.
@@ -118,8 +124,10 @@ class Structure:
         Cette fonction sert à fournir les indices de performance de notre structure.
 
         :param induit: Détermine si notre calcul de force est induit ou imposé
+        :type induit: bool
 
         :return: Nos indices de performance
+        :rtype: tuple
         """
         if induit:
             return self.encombrement_max, self.poids, self.Fx_induit
@@ -133,10 +141,14 @@ class Structure:
         y sortant.
 
         :param valeur: Notre valeur à tester.
+        :type valeur: float
         :param limite_min: Notre limite inférieure.
+        :type limite_min: float
         :param limite_max: Notre limite supérieure.
+        :type limite_max: float
 
         :return: Notre valeur qui rentre désormais dans nos limites.
+        :rtype: float
         """
         if valeur > limite_max:
 
@@ -154,10 +166,14 @@ class Structure:
         pas le cas, à changer cette valeur afin qu'elle soit égale à la limite.
 
         :param valeur: Notre valeur à tester.
+        :type valeur: float
         :param limite_min: Notre limite inférieure.
+        :type limite_min: float
         :param limite_max: Notre limite supérieure.
+        :type limite_max: float
 
         :return: Notre valeur qui rentre désormais dans nos limites.
+        :rtype: float
         """
         if valeur > limite_max:
 
@@ -174,8 +190,13 @@ class Structure:
         Cette fonction permet de modifier les caractéristiques de notre structure selon une température définit.
 
         :param temperature: Cette variable permet de choisir l'ampleur de la variation selon laquelle nos structures vont changer.
+        :type temperature: float
         :param longueur: Cette variable décide si l'on veut faire varier les longueurs.
+        :type longueur: bool
         :param angle: Cette variable décide si l'on veut faire varier les angles.
+        :type angle: bool
+        :param plus_nom: ajout au nom de la structure.
+        :type plus_nom: str
         """
         # Si on veut modifier la longueur, on applique une différence égale à (-1 à 1) * (max-min) * température
         if longueur:
@@ -195,7 +216,7 @@ class Structure:
 
 
         # On ajoute une partie au nom pour identifier les racines
-        if plus_nom != None: self.nom = self.nom + "." + plus_nom
+        if plus_nom != None: self.nom = self.nom + "." + str(plus_nom)
 
         # On génère la structure à partir des longueurs et des angles modifiés
         self.generation_structure()
@@ -205,6 +226,7 @@ class Structure:
         Cette fonction sert à montrer les paramètres de la structure afin d'obtenir un point initial pour l'optimisation.
 
         :return: les longueurs et les angles des éléments de notre structure.
+        :rtype: numpy ndarray
         """
         return self.longueur_segments, self.angles
 
@@ -214,6 +236,7 @@ class Structure:
         l'évaluer selon les critères choisis.
 
         :return: le score de la structure
+        :rtype: float
         """
         # On extrait nos ndarrays de longueurs et d'angles à partir des paramètres.
         nb_segments = self.nombre_points - 1
@@ -240,6 +263,7 @@ class Structure:
         On retourne les points composant notre structure.
 
         :return: Les points [x, y, x] composant notre structure.
+        :rtype: ndarray
         """
         return self.points
 
@@ -357,7 +381,9 @@ class Structure:
         On ajoute un tracé 3D de notre structure à la figure désirée.
 
         :param plyfig: Figure sur laquelle nous voulons tracer.
+        :type plyfig: Figure plotly
         :param titre: Titre que nous voulons donner à notre structure.
+        :type titre: str
         """
         if plyfig != None:
 
@@ -375,7 +401,10 @@ class Structure:
         """
         Sert à sauvegarder les points définissant la structure.
 
-        :param fichier: chemin du fichier.
+        :param nom_a_donner: nom que le fichier va avoir.
+        :type nom_a_donner: str
+        :param delimiteur: séparateur entre les données
+        :type delimiteur: str
         """
         # Initialisation du nom
         nom = nom_a_donner

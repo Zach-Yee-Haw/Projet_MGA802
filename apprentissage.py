@@ -1,10 +1,9 @@
 import numpy as np
 import math
-from structure import Structure as St
+from .structure import Structure as St
 import streamlit as st
-from extra_fonctions import *
+from .extra_fonctions import *
 from copy import deepcopy
-from matplotlib import pyplot as plt
 from tqdm import tqdm
 import plotly.graph_objects as go
 
@@ -16,21 +15,44 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     Fonction d'apprentissage pour optimiser des structures.
 
     :param nb_points: Nombre de points par structure.
+    :type nb_points: int
     :param longueur_max: Longueur maximale des segments d'une structure.
+    :type longueur_max: float
     :param longueur_min: Longueur minimale des segments d'une structure.
+    :type longueur_min: float
     :param nb_structures: Nombre total de structures à générer.
+    :type nb_structures: int
     :param nb_structures_a_garder: Nombre de structures à garder après chaque itération.
+    :type nb_structures_a_garder: int
     :param nb_iterations: Nombre total d'itérations pour l'apprentissage.
+    :type nb_iterations: int
     :param temperature_debut: Température initiale pour l'ajustement des paramètres.
+    :type temperature_debut: float
     :param temperature_fin: Température finale pour l'ajustement des paramètres.
+    :type temperature_fin: float
     :param tridimensionnel: Indique si les structures sont tridimensionnelles.
+    :type tridimensionnel: bool
     :param induit: Indique si le champs magnétique est induit ou imposé.
+    :type induit: bool
     :param a: Exposant pour le score (encombrement).
+    :type a: float
     :param b: Exposant pour le score (poids).
+    :type b: float
     :param biais: Facteur de biais pour le choix des structures.
-    :param montrer_perf: Indique si les performances doivent être affichées.
+    :type biais: float
+    :param plyfig: Figure permettant de montrer la performance à l'utilisateur
+    :type plyfig: figure plotly
+    :param barre_de_progression: barre de progression montrant la progression de l'apprentissage à l'utilisateur
+    :type barre_de_progression: barre de progression streamlit
+    :param espace_graph: espace réservé pour le graphique de la performance
+    :type espace_graph: espace streamlit
+    :param figure: figure montrant la structure actuelle
+    :type figure: figure plotly
+    :param espace_structure: espace réservé pour le graphique de la structure
+    :type espace_structure: espace streamlit
 
     :return: Le meilleur score et la structure ayant obtenu ce score.
+    :rtype: tuple
     """
     # Initialisation des variables pour les scores cumulés
     score_max_cumule = []
