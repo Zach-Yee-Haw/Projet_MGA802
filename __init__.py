@@ -76,6 +76,16 @@ with col2:
                       plyfig = performances_graph, barre_de_progression = barre_de_progression,
                       espace_graph=espace_performance, figure=structure_apprentissage_graph, espace_structure=espace_apprentissage)
 
+        # Réinitialisation de la figure pour la visualisation
+        structure_apprentissage_graph.data = []
+
+        # Ajout d'un point pour le satellite dans la visualisation
+        structure_apprentissage_graph.add_trace(go.Scatter3d(
+            x=[0], y=[0], z=[0],
+            marker=dict(size=4,
+                        color="red"),
+            name="Satellite"))
+
         # Afficher les performances de la structure après apprentissage
         enc, poi, force = structure.montrer_performance()
         titre = "Score : " + str(score) + ", Encombrement = " + str(enc) + ", poids = " + str(poi) + ", force = " + str(
@@ -87,10 +97,20 @@ with col2:
         # Si l'optimisation est activée, lancer le processus d'optimisation
         if optimiser == True:
             barre_de_progression.progress(100,text="Optimisation en cours...")
-            score, structure_optimisee = optimisation(structure, induit, a, b, tridimensionnel, nb_iterations =
-                                                        nb_iterations_optimisation, tolerance = tolerance,
-                                                        barre_de_progression=barre_de_progression,
-                                                        figure=structure_optimisee_graph, espace=espace_optimisation)
+            score, structure_optimisee = optimisation(structure, induit=induit, a=a, b=b, tridimensionnel=tridimensionnel,
+                                                        nb_iterations=nb_iterations_optimisation, tolerance = tolerance,
+                                                        barre_de_progression=barre_de_progression, figure=structure_optimisee_graph,
+                                                        espace=espace_optimisation)
+
+            # Réinitialisation de la figure pour la visualisation
+            structure_optimisee_graph.data = []
+
+            # Ajout d'un point pour le satellite dans la visualisation
+            structure_optimisee_graph.add_trace(go.Scatter3d(
+                x=[0], y=[0], z=[0],
+                marker=dict(size=4,
+                            color="red"),
+                name="Satellite"))
 
             # Afficher les performances de la structure optimisée
             enc, poi, force = structure_optimisee.montrer_performance()

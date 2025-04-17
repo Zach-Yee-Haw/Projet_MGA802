@@ -2,11 +2,9 @@ from random import random as rd
 import numpy as np
 
 def choix_biaises(liste_de_choix, nb_de_choix, biais):
-
     """
     Sélectionne un certain nombre d'éléments d'une liste avec un biais donné.
-    
-    
+
     :param liste_de_choix: Liste des éléments parmi lesquels choisir.
     :param nb_de_choix: Nombre d'éléments à sélectionner.
     :param biais: Facteur de biais pour influencer les choix (plus bas, plus les premiers éléments sont favorisés).
@@ -34,7 +32,6 @@ def choix_biaises(liste_de_choix, nb_de_choix, biais):
     return choix
 
 def trier(structures, nb_structures):
-
     """
     Trie une liste de structures en fonction de leurs scores dans l'ordre croissant.
     
@@ -58,7 +55,6 @@ def trier(structures, nb_structures):
     return structures_triees
 
 def melanger_structures(structures, nb_structures):
-
     """
     Mélange les structures de manière aléatoire.
     

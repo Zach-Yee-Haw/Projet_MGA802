@@ -12,11 +12,9 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
                   nb_structures_a_garder = 4, nb_iterations = 10, temperature_debut = 0.5,
                   temperature_fin = 0.2, tridimensionnel = True, induit = False, a = 0.5, b = 0.5, biais = 4,
                   plyfig = None, barre_de_progression = None, espace_graph = None, figure = None, espace_structure = None):
-
     """
     Fonction d'apprentissage pour optimiser des structures.
 
-    Paramètres:
     nb_points (int): Nombre de points par structure.
     longueur_max (int): Longueur maximale des segments d'une structure.
     longueur_min (int): Longueur minimale des segments d'une structure.

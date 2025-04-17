@@ -7,13 +7,10 @@ import plotly.graph_objects as go
 
 # Fonction principale d'optimisation
 def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = True, nb_iterations = 20,
-                 tolerance = 0.01, longueur_min = 100, longueur_max = 100, barre_de_progression = None, figure = None, espace = None):
-    
-
+                 tolerance = 0.01, barre_de_progression = None, figure = None, espace = None):
     """
     Fonction pour optimiser les paramètres d'une structure donnée en utilisant l'algorithme de Nelder-Mead.
-    
-    
+
     :param structure: Structure à optimiser.
     :param induit: Indique si le champs magnétique est induit ou imposé.
     :param a: Importance du critère d'encombrement.
@@ -21,16 +18,12 @@ def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = 
     :param tridimensionnel: Indique si l'optimisation est en 3D.
     :param nb_iterations: Nombre maximal d'itérations.
     :param tolerance: Tolérance pour la convergence.
-    :param longueur_min: Longueur minimale des segments.
-    :param longueur_max: Longueur maximale des segments.
     :param barre_de_progression: Barre de progression Streamlit.
     :param figure: Figure plotly servant à afficher la structure.
     :param espace: Espace Streamlit pour afficher la structure.
 
-    Returns:
-        tuple: Score final et structure optimisée.
+    :return: Score final et structure optimisée.
     """
-
     # Définition des paramètres globaux
     global structure_temp
     global iter
@@ -76,7 +69,6 @@ def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = 
 
 # Callback pour mettre à jour les visualisations pendant l'optimisation
 def callback(nb_iter, barre, figure, espace, a, b, etat):
-
     """
     Fonction callback appelée à chaque itération pour mettre à jour la barre de progression
     et visualiser l'état actuel de la structure.
@@ -89,7 +81,6 @@ def callback(nb_iter, barre, figure, espace, a, b, etat):
     :param b (float): Importance du critère de poids.
     :param etat: État actuel des paramètres.
     """
-    
     global structure_temp
     global iter
 
