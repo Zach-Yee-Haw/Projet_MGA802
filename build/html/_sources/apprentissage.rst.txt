@@ -1,0 +1,7 @@
+apprentissage module
+====================
+
+.. automodule:: apprentissage
+   :members:
+   :undoc-members:
+   :show-inheritance:

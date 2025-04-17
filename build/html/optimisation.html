@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>optimisation module &#8212; Documentation Projet MGA802 </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=d1a510d7"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-optimisation">
+<span id="optimisation-module"></span><h1>optimisation module<a class="headerlink" href="#module-optimisation" title="Lien vers cette rubrique">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="optimisation.callback">
+<span class="sig-prename descclassname"><span class="pre">optimisation.</span></span><span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nb_iter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espace</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimisation.callback" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Fonction callback appelée à chaque itération pour mettre à jour la barre de progression
+et visualiser l’état actuel de la structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nb_iter</strong> (<em>int</em>) – Nombre total d’itérations.</p></li>
+<li><p><strong>barre</strong> (<em>barre de progression streamlit</em>) – Composant Streamlit pour afficher la progression.</p></li>
+<li><p><strong>figure</strong> (<em>figure plotly</em>) – Figure plotly pour afficher la structure.</p></li>
+<li><p><strong>espace</strong> (<em>espace streamlit</em>) – Espace Streamlit pour afficher la structure.</p></li>
+<li><p><strong>a</strong> (<em>float</em>) – Importance du critère d’encombrement.</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – Importance du critère de poids.</p></li>
+<li><p><strong>etat</strong> (<em>ndarray</em>) – État actuel des paramètres.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimisation.optimisation">
+<span class="sig-prename descclassname"><span class="pre">optimisation.</span></span><span class="sig-name descname"><span class="pre">optimisation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">induit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tridimensionnel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barre_de_progression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#optimisation.optimisation" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Fonction pour optimiser les paramètres d’une structure donnée en utilisant l’algorithme de Nelder-Mead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>structure</strong> (<a class="reference internal" href="structure.html#structure.Structure" title="structure.Structure"><em>Structure</em></a>) – Structure à optimiser.</p></li>
+<li><p><strong>induit</strong> (<em>bool</em>) – Indique si le champs magnétique est induit ou imposé.</p></li>
+<li><p><strong>a</strong> (<em>float</em>) – Importance du critère d’encombrement.</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – Importance du critère de poids.</p></li>
+<li><p><strong>tridimensionnel</strong> (<em>bool</em>) – Indique si l’optimisation est en 3D.</p></li>
+<li><p><strong>nb_iterations</strong> (<em>int</em>) – Nombre maximal d’itérations.</p></li>
+<li><p><strong>tolerance</strong> (<em>float</em>) – Tolérance pour la convergence.</p></li>
+<li><p><strong>barre_de_progression</strong> (<em>barre de progression streamlit</em>) – Barre de progression Streamlit.</p></li>
+<li><p><strong>figure</strong> (<em>figure plotly</em>) – Figure plotly servant à afficher la structure.</p></li>
+<li><p><strong>espace</strong> (<em>espace streamlit</em>) – Espace Streamlit pour afficher la structure.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Score final et structure optimisée.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Projet MGA802</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Zacharie Simoneau zacharie.simoneau.1@ens.etsmtl.ca.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/optimisation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

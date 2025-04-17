@@ -5,7 +5,10 @@ Le code combine des techniques de génération, d'évaluation et d'amélioration
 L'objectif principal est de produire des structures performantes selon les pondérations définies par l'utilisateur.
 
 ---
+## Documentation
+Pour accéder à la documentation, ouvrez build/html/index.html
 
+---
 ## Objectifs du Code
 1. **Apprentissage des structures** : Générer et évaluer un ensemble de structures à travers plusieurs itérations d'apprentissage. Les meilleures structures sont conservées et modifiées pour itérer vers des solutions optimales.
 2. **Optimisation des structures** : Améliorer une structure donnée à l'aide de l'algorithme Nelder-Mead pour maximiser les performances spécifiques (force, encombrement, poids).
@@ -31,7 +34,7 @@ L'objectif principal est de produire des structures performantes selon les pond�
 
   - Ouvrez le fichier run.bat ou bien tapez la commande suivante :
 
-        streamlit run __init__.py
+        streamlit run main.py
   
 - Configurer les paramètres via l'interface utilisateur :
 
@@ -64,7 +67,7 @@ Le code est organisé en plusieurs modules pour garantir la modularité et la li
 
   - Regroupe des fonctions utilitaires, comme le tri, le calcul des scores et le mélange des structures.
 
-- __init__.py :
+- main.py :
 
   - Point d'entrée principal du projet.
   - Configure l'interface utilisateur Streamlit pour permettre une interaction simple avec les différentes fonctionnalités du projet.
