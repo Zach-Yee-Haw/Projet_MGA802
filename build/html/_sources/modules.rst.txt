@@ -1,0 +1,12 @@
+Projet
+======
+
+.. toctree::
+   :maxdepth: 4
+
+   apprentissage
+   extra_fonctions
+   main
+   optimisation
+   setup
+   structure

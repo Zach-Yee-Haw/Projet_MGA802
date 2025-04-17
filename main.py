@@ -1,22 +1,22 @@
-#scikit sklearn-genetic-opt?
 import streamlit as st
 from apprentissage import apprentissage
 from optimisation import optimisation
 from structure import Structure as St
-import plotly as ply
 import plotly.graph_objects as go
 
+# Configuration de la mise en page de Streamlit
 st.set_page_config(layout="wide")
 
-# Initialiser les variables de session si elles n'existent pas
+# Initialisation des variables de session si elles n'existent pas
 if 'score_apprentissage' not in st.session_state:
     st.session_state['score_apprentissage'] = None
 if 'structure_apprentissage' not in st.session_state:
     st.session_state['structure_apprentissage'] = None
 
-
+# Création de trois colonnes dans la mise en page
 col1, col2, col3 = st.columns([1, 1, 2])
 
+# Initialisation des objets graphiques pour les visualisations
 performances_graph = go.Figure()
 structure_apprentissage_graph = go.Figure(data=go.Scatter3d(
                 x=[0], y=[0], z=[0],
@@ -29,15 +29,17 @@ structure_optimisee_graph = go.Figure(data=go.Scatter3d(
                             color="red"),
                 name="Satellite"))
 
+# Configuration des widgets dans la troisième colonne (col3)
 with col3:
-    barre_de_progression = st.progress(0, text="Prêt")
+    barre_de_progression = st.progress(0, text="Prêt")  # Barre de progression
+    espace_performance= st.empty()  # Espace pour afficher les performances
+    espace_apprentissage = st.empty()  # Espace pour afficher les résultats d'apprentissage
+    espace_optimisation = st.empty()  # Espace pour afficher les résultats d'optimisation
 
-    espace_performance= st.empty()
-    espace_apprentissage = st.empty()
-    espace_optimisation = st.empty()
-
+# Initialisation d'une instance de la classe Structure
 structure = St()
 
+# Configuration des entrées utilisateur dans la première colonne (col1)
 with col1:
     nb_points = st.number_input('Nombre de points dans la structure : ', min_value=2, value=31)
     longueur_min = st.number_input('Longueur minimale des segments : ', min_value=0.0, value=100.0)
@@ -53,46 +55,73 @@ with col1:
     b = st.number_input('Importance du poids dans le calcul du score : ', min_value=0.0, value=0.5)
     biais = st.number_input('Biais de sélection des structures : ', min_value=1, value=4)
     optimiser = st.checkbox('Optimiser la structure après l\'apprentissage', value=True)
-    if optimiser == True:
+    if optimiser == True:  # Si l'optimisation est activée, afficher des paramètres supplémentaires
         nb_iterations_optimisation = st.number_input('Nombre d\'itérations d\'optimisation : ', min_value=2, value=20)
         tolerance = st.number_input('Tolérance : ', min_value=0.0, max_value=1.0, value=0.01)
 
+# Gestion des actions utilisateur dans la deuxième colonne (col2)
 with col2:
-    if st.button('Démarrer apprentissage'):
-
+    if st.button('Démarrer apprentissage'):  # Bouton pour démarrer le processus d'apprentissage
+        
+        # Afficher le graphique d'apprentissage
         with espace_apprentissage:
             st.plotly_chart(structure_apprentissage_graph, key="appr", use_container_width=False)
 
+        # Lancer le processus d'apprentissage
         score, structure = apprentissage(nb_points, longueur_max, longueur_min, nb_structures,
                       nb_structures_a_garder, nb_iterations, temperature_debut,
                       temperature_fin, tridimensionnel, induit, a, b, biais,
                       plyfig = performances_graph, barre_de_progression = barre_de_progression,
                       espace_graph=espace_performance, figure=structure_apprentissage_graph, espace_structure=espace_apprentissage)
 
+        # Réinitialisation de la figure pour la visualisation
+        structure_apprentissage_graph.data = []
+
+        # Ajout d'un point pour le satellite dans la visualisation
+        structure_apprentissage_graph.add_trace(go.Scatter3d(
+            x=[0], y=[0], z=[0],
+            marker=dict(size=4,
+                        color="red"),
+            name="Satellite"))
+
+        # Afficher les performances de la structure après apprentissage
         enc, poi, force = structure.montrer_performance()
         titre = "Score : " + str(score) + ", Encombrement = " + str(enc) + ", poids = " + str(poi) + ", force = " + str(
             force) + "."
-
         structure.visualiser_structure(plyfig=structure_apprentissage_graph, titre=titre)
         with espace_apprentissage:
             st.plotly_chart(structure_apprentissage_graph, use_container_width=False)
 
-
+        # Si l'optimisation est activée, lancer le processus d'optimisation
         if optimiser == True:
             barre_de_progression.progress(100,text="Optimisation en cours...")
+            score, structure_optimisee = optimisation(structure, induit=induit, a=a, b=b, tridimensionnel=tridimensionnel,
+                                                        nb_iterations=nb_iterations_optimisation, tolerance = tolerance,
+                                                        barre_de_progression=barre_de_progression, figure=structure_optimisee_graph,
+                                                        espace=espace_optimisation)
 
-            score, structure_optimisee = optimisation(structure, induit, a, b, tridimensionnel, nb_iterations =
-                                                        nb_iterations_optimisation, tolerance = tolerance,
-                                                        barre_de_progression=barre_de_progression,
-                                                        figure=structure_optimisee_graph, espace=espace_optimisation)
+            # Réinitialisation de la figure pour la visualisation
+            structure_optimisee_graph.data = []
 
+            # Ajout d'un point pour le satellite dans la visualisation
+            structure_optimisee_graph.add_trace(go.Scatter3d(
+                x=[0], y=[0], z=[0],
+                marker=dict(size=4,
+                            color="red"),
+                name="Satellite"))
+
+            # Afficher les performances de la structure optimisée
             enc, poi, force = structure_optimisee.montrer_performance()
-
             titre = "Score : "+str(score)+", Encombrement = "+str(enc)+", poids = "+str(poi)+", force = "+str(force)+"."
-
             structure_optimisee.visualiser_structure(plyfig=structure_optimisee_graph, titre=titre)
-
             with espace_optimisation:
                 st.plotly_chart(structure_optimisee_graph, key="opti", use_container_width=False)
 
+        # Mettre à jour la barre de progression pour indiquer l'enregistrement'
+        barre_de_progression.progress(100, text="Enregistrement en cours...")
+
+        # Enregistrement de la structure
+        structure_optimisee.sauvegarde()
+
+        # Mettre à jour la barre de progression pour indiquer la fin'
         barre_de_progression.progress(100, text="Terminé !")

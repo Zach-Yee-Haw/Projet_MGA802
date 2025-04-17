@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>structure module &#8212; Documentation Projet MGA802 </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=d1a510d7"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-structure">
+<span id="structure-module"></span><h1>structure module<a class="headerlink" href="#module-structure" title="Lien vers cette rubrique">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="structure.Structure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">structure.</span></span><span class="sig-name descname"><span class="pre">Structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nombre_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_segments_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_segments_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tridimensionnel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.appliquer_limites">
+<span class="sig-name descname"><span class="pre">appliquer_limites</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valeur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limite_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limite_max</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.appliquer_limites" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Cette fonction sert à prendre une fonction en entrée, à vérifier si elle entre dans le limites et si ce n’est
+pas le cas, à changer cette valeur afin qu’elle entre dans les limite avec la même différence qu’elle avait en
+y sortant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>valeur</strong> (<em>float</em>) – Notre valeur à tester.</p></li>
+<li><p><strong>limite_min</strong> (<em>float</em>) – Notre limite inférieure.</p></li>
+<li><p><strong>limite_max</strong> (<em>float</em>) – Notre limite supérieure.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Notre valeur qui rentre désormais dans nos limites.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.appliquer_limites_aggressif">
+<span class="sig-name descname"><span class="pre">appliquer_limites_aggressif</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valeur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limite_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limite_max</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.appliquer_limites_aggressif" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Cette fonction sert à prendre une fonction en entrée, à vérifier si elle entre dans le limites et si ce n’est
+pas le cas, à changer cette valeur afin qu’elle soit égale à la limite.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>valeur</strong> (<em>float</em>) – Notre valeur à tester.</p></li>
+<li><p><strong>limite_min</strong> (<em>float</em>) – Notre limite inférieure.</p></li>
+<li><p><strong>limite_max</strong> (<em>float</em>) – Notre limite supérieure.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Notre valeur qui rentre désormais dans nos limites.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.evaluer_force">
+<span class="sig-name descname"><span class="pre">evaluer_force</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.evaluer_force" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Calcule la force générée par la structure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.generation_structure">
+<span class="sig-name descname"><span class="pre">generation_structure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.generation_structure" title="Lien vers cette définition">¶</a></dt>
+<dd><p>À partir des angles et des longueurs de segments que nous avons générés, nous trouvons les points qui les composent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Une liste de points composant notre structure.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.modifier_parametres">
+<span class="sig-name descname"><span class="pre">modifier_parametres</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plus_nom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.modifier_parametres" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Cette fonction permet de modifier les caractéristiques de notre structure selon une température définit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>temperature</strong> (<em>float</em>) – Cette variable permet de choisir l’ampleur de la variation selon laquelle nos structures vont changer.</p></li>
+<li><p><strong>longueur</strong> (<em>bool</em>) – Cette variable décide si l’on veut faire varier les longueurs.</p></li>
+<li><p><strong>angle</strong> (<em>bool</em>) – Cette variable décide si l’on veut faire varier les angles.</p></li>
+<li><p><strong>plus_nom</strong> (<em>str</em>) – ajout au nom de la structure.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.montrer_parametres">
+<span class="sig-name descname"><span class="pre">montrer_parametres</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.montrer_parametres" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Cette fonction sert à montrer les paramètres de la structure afin d’obtenir un point initial pour l’optimisation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>les longueurs et les angles des éléments de notre structure.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>numpy ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.montrer_performance">
+<span class="sig-name descname"><span class="pre">montrer_performance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">induit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.montrer_performance" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Cette fonction sert à fournir les indices de performance de notre structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>induit</strong> (<em>bool</em>) – Détermine si notre calcul de force est induit ou imposé</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nos indices de performance</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.montrer_points">
+<span class="sig-name descname"><span class="pre">montrer_points</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.montrer_points" title="Lien vers cette définition">¶</a></dt>
+<dd><p>On retourne les points composant notre structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Les points [x, y, x] composant notre structure.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.redefinir_parametres">
+<span class="sig-name descname"><span class="pre">redefinir_parametres</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">induit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tridimensionnel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biais</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.redefinir_parametres" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Cette fonction sert à prendre des paramètres en entrée, à générer la structure à partir de ces paramètres puis à
+l’évaluer selon les critères choisis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>le score de la structure</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.sauvegarde">
+<span class="sig-name descname"><span class="pre">sauvegarde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nom_a_donner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiteur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.sauvegarde" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Sert à sauvegarder les points définissant la structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nom_a_donner</strong> (<em>str</em>) – nom que le fichier va avoir.</p></li>
+<li><p><strong>delimiteur</strong> (<em>str</em>) – séparateur entre les données</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.visualiser_structure">
+<span class="sig-name descname"><span class="pre">visualiser_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plyfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">titre</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.visualiser_structure" title="Lien vers cette définition">¶</a></dt>
+<dd><p>On ajoute un tracé 3D de notre structure à la figure désirée.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plyfig</strong> (<em>Figure plotly</em>) – Figure sur laquelle nous voulons tracer.</p></li>
+<li><p><strong>titre</strong> (<em>str</em>) – Titre que nous voulons donner à notre structure.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Projet MGA802</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Zacharie Simoneau zacharie.simoneau.1@ens.etsmtl.ca.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/structure.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

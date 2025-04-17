@@ -1,0 +1,7 @@
+extra\_fonctions module
+=======================
+
+.. automodule:: extra_fonctions
+   :members:
+   :undoc-members:
+   :show-inheritance:
