@@ -40,7 +40,7 @@ enregistrement = True # Détermine si la structure est enregistrée à la fin
 
 # On initialise les longueurs min et max
 longueur_max = 100.0
-longueur_min = longueur_max = 100.0 * proportion_longueur
+longueur_min = longueur_max * proportion_longueur
 
 # Lancer le processus d'apprentissage
 score, structure = apprentissage(nb_points, longueur_max, longueur_min, nb_structures,
