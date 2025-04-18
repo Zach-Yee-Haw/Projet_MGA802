@@ -1,8 +1,8 @@
 import numpy as np
 import math
-from .structure import Structure as St
+from structure import Structure as St
 import streamlit as st
-from .extra_fonctions import *
+from extra_fonctions import *
 from copy import deepcopy
 from tqdm import tqdm
 import plotly.graph_objects as go
