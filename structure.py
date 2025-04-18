@@ -1,6 +1,7 @@
 import numpy as np
 import streamlit as st
 import plotly.graph_objects as go
+import plotly.redr
 from datetime import datetime
 from math import pi
 from astropy import constants
@@ -422,6 +423,8 @@ class Structure:
             # On ajoute le titre
             plyfig.update_layout(title=titre)
 
+            plyfig.batch_update()
+
     def sauvegarde(self, nom_a_donner = None, delimiteur = ","):
         """
         Sert à sauvegarder les points définissant la structure.
@@ -431,9 +434,9 @@ class Structure:
         :param delimiteur: séparateur entre les données.
         :type delimiteur: str
         """
+        print("Enregistrement en cours...")
         # Initialisation du nom
         fichier = nom_a_donner
-
 
         # Si aucun nom n'est donné, on en génère un
         if fichier == None:
@@ -474,6 +477,7 @@ class Structure:
         :param biais: valeur de l'intensité de l'exposant du score.
         :type biais: float
         """
+        print("Chargement en cours...")
         # Définition du chemin
         chemin = "Structures\\" + fichier
         # Chargement des paramètres

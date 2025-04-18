@@ -2,12 +2,10 @@ import numpy as np
 import scipy as scp
 from functools import partial as pa
 from copy import deepcopy
-import streamlit as st
-import plotly.graph_objects as go
 
 # Fonction principale d'optimisation
 def optimisation(structure, induit = False, b = 0.5, tridimensionnel = True, nb_iterations = 20,
-                 tolerance = 0.01, barre_de_progression = None, figure = None, espace = None):
+                 tolerance = 0.01, figure = None):
     """
     Fonction pour optimiser les paramètres d'une structure donnée en utilisant l'algorithme de Nelder-Mead.
 
@@ -23,12 +21,8 @@ def optimisation(structure, induit = False, b = 0.5, tridimensionnel = True, nb_
     :type nb_iterations: int
     :param tolerance: Tolérance pour la convergence.
     :type tolerance: float
-    :param barre_de_progression: Barre de progression Streamlit.
-    :type barre_de_progression: barre de progression streamlit
     :param figure: Figure plotly servant à afficher la structure.
     :type figure: figure plotly
-    :param espace: Espace Streamlit pour afficher la structure.
-    :type espace: espace streamlit
 
     :return: Score final et structure optimisée.
     :rtype: tuple
@@ -42,7 +36,6 @@ def optimisation(structure, induit = False, b = 0.5, tridimensionnel = True, nb_
     iter = 0
     structure_temp = deepcopy(structure)
     nb_iter = nb_iterations
-    barre = barre_de_progression
 
     # Extraction des angles theta et phi
     theta = angles[:, 0]
@@ -54,12 +47,10 @@ def optimisation(structure, induit = False, b = 0.5, tridimensionnel = True, nb_
     params[0:nb_segments] = longueurs
     params[nb_segments:nb_segments*2] = theta
     params[nb_segments*2:nb_segments*3] = phi
-
-    # Mise à jour de la barre de progression
-    barre.progress(0, text="Calcul des dérivées en cours pour l'optimisation de Nelder-Mead...")
+    print("Calcul des dérivées en cours pour l'optimisation de Nelder-Mead...")
 
     # Définition d'un callback avec plus de paramètres pour suivre l'avancement
-    mettre_bar_a_jour = pa(callback,nb_iter, barre_de_progression, figure, espace, b)
+    mettre_bar_a_jour = pa(callback,nb_iter, figure, b)
 
     # Optimisation avec l'algorithme de Nelder-Mead
     resultats = scp.optimize.minimize(structure.redefinir_parametres, params, method='Nelder-Mead', args=(induit, b, tridimensionnel), options={'maxiter':nb_iterations, 'disp':False, 'xatol':tolerance}, callback=mettre_bar_a_jour)
@@ -77,19 +68,15 @@ def optimisation(structure, induit = False, b = 0.5, tridimensionnel = True, nb_
     return score, structure
 
 # Callback pour mettre à jour les visualisations pendant l'optimisation
-def callback(nb_iter, barre, figure, espace, b, etat):
+def callback(nb_iter, figure, b, etat):
     """
     Fonction callback appelée à chaque itération pour mettre à jour la barre de progression
     et visualiser l'état actuel de la structure.
     
     :param nb_iter: Nombre total d'itérations.
     :type nb_iter: int
-    :param barre: Composant Streamlit pour afficher la progression.
-    :type barre: barre de progression streamlit
     :param figure: Figure plotly pour afficher la structure.
     :type figure: figure plotly
-    :param espace: Espace Streamlit pour afficher la structure.
-    :type espace: espace streamlit
     :param a: Importance du critère d'encombrement.
     :type a: float
     :param b: Importance du critère de poids.
@@ -114,9 +101,7 @@ def callback(nb_iter, barre, figure, espace, b, etat):
 
     # Visualisation de la structure optimisée
     structure_temp.visualiser_structure(figure, titre)
-    with espace:
-        st.plotly_chart(figure, key="opti" + str(iter), use_container_width=False)
 
-    # Mise à jour de la barre de progression
-    barre.progress(iter/(nb_iter-1), text="Progrès de l'optimisation : "+str(iter+1)+"/"+str(nb_iter))
+    # Affichage du progrès
+    print("Progrès de l'optimisation : "+str(iter+1)+"/"+str(nb_iter))
     iter += 1
