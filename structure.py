@@ -1,7 +1,5 @@
 import numpy as np
-import streamlit as st
 import plotly.graph_objects as go
-import plotly.redr
 from datetime import datetime
 from math import pi
 from astropy import constants
