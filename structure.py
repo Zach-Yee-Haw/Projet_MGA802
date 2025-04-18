@@ -421,7 +421,7 @@ class Structure:
             # On ajoute le titre
             plyfig.update_layout(title=titre)
 
-            plyfig.batch_update()
+            plyfig.update_traces(overwrite=True)
 
     def sauvegarde(self, nom_a_donner = None, delimiteur = ","):
         """

@@ -4,7 +4,7 @@ from structure import Structure as St
 import plotly.graph_objects as go
 
 # Initialisation des objets graphiques pour les visualisations
-performances_graph = go.FigureWidget(go.Figure())
+performances_graph = go.Figure()
 structure_apprentissage_graph = go.Figure(data=go.Scatter3d(
                 x=[0], y=[0], z=[0],
                 marker=dict(size=4,
@@ -21,23 +21,26 @@ structure_apprentissage_graph.show()
 structure_optimisee_graph.show()
 
 # Configuration des entrées
-nb_points = 31
-longueur_min = 100.0
-encombrement_cible = 500.0
+nb_points = 31  # Nombre de points dans la structure
+proportion_longueur = 1.0 # Longueur min / longueur max
+encombrement_cible = 500.0 # Encombrement de la structure
+nb_structures = 10 # Nombre de structures pas itération
+nb_structures_a_garder = 4 # Nombre de structures par itération
+nb_iterations = 10 # Nombre d'itérations à simuler
+temperature_debut = 0.5 # Température initiale
+temperature_fin = 0.2 # Température finale
+tridimensionnel = True # Détermine si la structure est tridimensionnelle
+induit = False # Détermine si le courant est induit ou imposé
+b = 0.5 # Importance du poids dans le calcul du score
+biais = 4 # Chance de conserver les meilleures structures
+optimiser = True # Détermine si l'optimisation se déroule après l'apprentissage
+nb_iterations_optimisation = 20 # Nombre d'itérations pendant l'optimisation
+tolerance = 0.01 # Tolérance pendant l'optimisation
+enregistrement = True # Détermine si la structure est enregistrée à la fin
+
+# On initialise les longueurs min et max
 longueur_max = 100.0
-nb_structures = 10
-nb_structures_a_garder = 4
-nb_iterations = 10
-temperature_debut = 0.5
-temperature_fin = 0.2
-tridimensionnel = True
-induit = False
-b = 0.5
-biais = 4
-optimiser = True
-nb_iterations_optimisation = 20
-tolerance = 0.01
-enregistrement = True
+longueur_min = longueur_max = 100.0 * proportion_longueur
 
 # Lancer le processus d'apprentissage
 score, structure = apprentissage(nb_points, longueur_max, longueur_min, nb_structures,

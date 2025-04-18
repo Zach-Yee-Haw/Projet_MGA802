@@ -121,7 +121,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
                 name="Score minimum par itération"))
 
             # Affichage de la figure
-            plyfig.batch_update()
+            plyfig.update_traces()
 
         # Si l'apprentissage n'est pas terminé, on prépare la prochaine itération
         if i < nb_iterations:
