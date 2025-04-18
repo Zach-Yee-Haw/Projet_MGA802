@@ -6,7 +6,7 @@ import streamlit as st
 import plotly.graph_objects as go
 
 # Fonction principale d'optimisation
-def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = True, nb_iterations = 20,
+def optimisation(structure, induit = False, b = 0.5, tridimensionnel = True, nb_iterations = 20,
                  tolerance = 0.01, barre_de_progression = None, figure = None, espace = None):
     """
     Fonction pour optimiser les paramètres d'une structure donnée en utilisant l'algorithme de Nelder-Mead.
@@ -15,8 +15,6 @@ def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = 
     :type structure: Structure
     :param induit: Indique si le champs magnétique est induit ou imposé.
     :type induit: bool
-    :param a: Importance du critère d'encombrement.
-    :type a: float
     :param b: Importance du critère de poids.
     :type b: float
     :param tridimensionnel: Indique si l'optimisation est en 3D.
@@ -61,25 +59,25 @@ def optimisation(structure, induit = False, a = 0.5, b = 0.5, tridimensionnel = 
     barre.progress(0, text="Calcul des dérivées en cours pour l'optimisation de Nelder-Mead...")
 
     # Définition d'un callback avec plus de paramètres pour suivre l'avancement
-    mettre_bar_a_jour = pa(callback,nb_iter, barre_de_progression, figure, espace, a, b)
+    mettre_bar_a_jour = pa(callback,nb_iter, barre_de_progression, figure, espace, b)
 
     # Optimisation avec l'algorithme de Nelder-Mead
-    resultats = scp.optimize.minimize(structure.redefinir_parametres, params, method='Nelder-Mead', args=(induit, a, b, tridimensionnel), options={'maxiter':nb_iterations, 'disp':False, 'xatol':tolerance}, callback=mettre_bar_a_jour)
+    resultats = scp.optimize.minimize(structure.redefinir_parametres, params, method='Nelder-Mead', args=(induit, b, tridimensionnel), options={'maxiter':nb_iterations, 'disp':False, 'xatol':tolerance}, callback=mettre_bar_a_jour)
 
     # Récupération des nouveaux paramètres optimisés
     x = resultats.get('x')
 
     # Mise à jour de la structure avec les nouveaux paramètres
-    structure.redefinir_parametres(x, induit, a, b, tridimensionnel)
+    structure.redefinir_parametres(x, induit, b, tridimensionnel)
 
     # Calcul des performances finales
     scores = structure.montrer_performance(induit)
-    score = scores[2] / (scores[0] ** a * scores[1] ** b)
+    score = scores[2] / (scores[1] ** b)
 
     return score, structure
 
 # Callback pour mettre à jour les visualisations pendant l'optimisation
-def callback(nb_iter, barre, figure, espace, a, b, etat):
+def callback(nb_iter, barre, figure, espace, b, etat):
     """
     Fonction callback appelée à chaque itération pour mettre à jour la barre de progression
     et visualiser l'état actuel de la structure.
@@ -108,21 +106,11 @@ def callback(nb_iter, barre, figure, espace, a, b, etat):
 
     # Calcul des performances actuelles
     enc, poi, force = structure_temp.montrer_performance()
-    score = force / (enc**a * poi**b)
+    score = force / (poi**b)
 
     # Mise à jour du titre avec les scores actuels
     titre = "Score : " + str(score) + ", Encombrement = " + str(enc) + ", poids = " + str(poi) + ", force = " + str(
         force) + "."
-
-    # Réinitialisation de la figure pour la visualisation
-    figure.data = []
-
-    # Ajout d'un point pour le satellite dans la visualisation
-    figure.add_trace(go.Scatter3d(
-        x=[0], y=[0], z=[0],
-        marker=dict(size=4,
-                    color="red"),
-        name="Satellite"))
 
     # Visualisation de la structure optimisée
     structure_temp.visualiser_structure(figure, titre)
@@ -132,7 +120,3 @@ def callback(nb_iter, barre, figure, espace, a, b, etat):
     # Mise à jour de la barre de progression
     barre.progress(iter/(nb_iter-1), text="Progrès de l'optimisation : "+str(iter+1)+"/"+str(nb_iter))
     iter += 1
-
-
-
-

@@ -12,7 +12,7 @@ from Calcul_Force_EM.Geometrie_fct import *
 
 class Structure:
 
-    def __init__(self, nombre_points=10, longueur_segments_max=1, longueur_segments_min=1, tridimensionnel = True, nom = ""):
+    def __init__(self, nombre_points=10, longueur_segments_max=100, longueur_segments_min=100, encombrement_cible=500, tridimensionnel = True, nom = ""):
         """
         Initialisation de la classe Structure.
         Cette classe représente les structures que nous voulons générer, puis évaluer.
@@ -33,6 +33,7 @@ class Structure:
         self.nombre_points = nombre_points
         self.longueur_segments_max = longueur_segments_max
         self.longueur_segments_min = longueur_segments_min
+        self.encombrement_cible = encombrement_cible
         self.tridimensionnel = tridimensionnel
         self.poids = 0
         self.force_induit = 0
@@ -116,7 +117,10 @@ class Structure:
 
         # À partir de l'encombrement de chaque point et des longueurs, nous trouvons l'encombrement max et le poids de la structure.
         self.encombrement_max = self.encombrements.max()
+        self.points = self.points * self.encombrement_cible / self.encombrement_max
+        self.longueur_segments = self.longueur_segments * self.encombrement_cible / self.encombrement_max
         self.poids = self.longueur_segments.sum()
+        self.encombrement_max = self.encombrement_cible
         self.evaluer_force()
 
     def montrer_performance(self, induit = False):
@@ -211,8 +215,8 @@ class Structure:
         #                                                                 et (-pi/2 à pi/2) * température pour phi.
         if angle:
 
-            self.angles[:, 0] = np.mod(self.angles[:, 0] + (np.random.rand(self.nombre_points-1) - 0.5) * 2 * np.pi * temperature, 2 * np.pi)
-            self.angles[:, 1] = self.angles[:, 1] + (np.random.rand(self.nombre_points-1) - 0.5) * np.pi * temperature * self.tridimensionnel
+            self.angles[:, 0] = np.mod(self.angles[:, 0] + (np.random.rand(self.nombre_points-1) - 0.5) * 2 * np.pi * temperature, 2 * np.pi) * self.tridimensionnel
+            self.angles[:, 1] = self.angles[:, 1] + (np.random.rand(self.nombre_points-1) - 0.5) * np.pi * temperature
 
 
         # On ajoute une partie au nom pour identifier les racines
@@ -230,7 +234,7 @@ class Structure:
         """
         return self.longueur_segments, self.angles
 
-    def redefinir_parametres(self, params, induit = False, a = 1, b = 1, tridimensionnel = True, biais = 5):
+    def redefinir_parametres(self, params, induit = False, b = 1, tridimensionnel = True, biais = 5):
         """
         Cette fonction sert à prendre des paramètres en entrée, à générer la structure à partir de ces paramètres puis à
         l'évaluer selon les critères choisis.
@@ -254,7 +258,7 @@ class Structure:
         # On génère la structure, puis on évalue son score.
         self.generation_structure()
         encombrement, poids, force = self.montrer_performance(induit)
-        score = (force/(encombrement**a * poids**b))**-biais
+        score = (force/(poids**b))**-biais
 
         return score
 
@@ -386,7 +390,15 @@ class Structure:
         :type titre: str
         """
         if plyfig != None:
-
+            # Réinitialisation de la figure
+            plyfig.data = []
+            # Ajout du satellite dans la figure
+            plyfig.add_trace(go.Scatter3d(
+                x=[0], y=[0], z=[0],
+                marker=dict(size=4,
+                            color="red"),
+                name="Satellite"))
+            # Ajout de la structure dans la figure
             plyfig.add_trace(go.Scatter3d(
                 x=self.x, y=self.y, z=self.z,
                 marker=dict(size=1,
@@ -394,7 +406,7 @@ class Structure:
                 line=dict(color="cyan",
                           width=2),
                 name="Câble"))
-
+            # On ajoute le titre
             plyfig.update_layout(title=titre)
 
     def sauvegarde(self, nom_a_donner = None, delimiteur = ","):
@@ -407,18 +419,28 @@ class Structure:
         :type delimiteur: str
         """
         # Initialisation du nom
-        nom = nom_a_donner
+        fichier = nom_a_donner
+
 
         # Si aucun nom n'est donné, on en génère un
-        if nom == None:
+        if fichier == None:
             date = str(datetime.now())
             date = date.replace(" ", "_")
             date = date.replace(".", "_")
             date = date.replace(":", "-")
-            nom = "Structure_" + date + ".csv"
+            fichier = "Structures\\Structure_" + date
+
+        # Génération des noms
+        nom_points = fichier + "_points.csv"
+        nom_parametres = fichier + "_parametres.csv"
 
         # Génération des points
         points = self.montrer_points()
+        parametres = np.ndarray((self.nombre_points - 1, 3))
+        parametres[:, 0] = self.longueur_segments[:]
+        parametres[:, 1] = self.angles[:, 0]
+        parametres[:, 2] = self.angles[:, 1]
 
-        # Sauvegarde de la sructure
-        np.savetxt(nom, points, delimiter=delimiteur)
+        # Sauvegarde de la structure
+        np.savetxt(nom_points, points, delimiter=delimiteur)
+        np.savetxt(nom_parametres, parametres, delimiter=delimiteur)
