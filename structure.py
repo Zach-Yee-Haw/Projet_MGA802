@@ -117,8 +117,10 @@ class Structure:
 
         # À partir de l'encombrement de chaque point et des longueurs, nous trouvons l'encombrement max et le poids de la structure.
         self.encombrement_max = self.encombrements.max()
+        # On s'assure que l'encombrement de la structure correspond à l'encombrement cible.
         self.points = self.points * self.encombrement_cible / self.encombrement_max
         self.longueur_segments = self.longueur_segments * self.encombrement_cible / self.encombrement_max
+        # Calcul du poids, redéfinition de l'encombrement et évaluation de la force
         self.poids = self.longueur_segments.sum()
         self.encombrement_max = self.encombrement_cible
         self.evaluer_force()
@@ -127,10 +129,10 @@ class Structure:
         """
         Cette fonction sert à fournir les indices de performance de notre structure.
 
-        :param induit: Détermine si notre calcul de force est induit ou imposé
+        :param induit: Détermine si notre calcul de force est induit ou imposé.
         :type induit: bool
 
-        :return: Nos indices de performance
+        :return: Nos indices de performance.
         :rtype: tuple
         """
         if induit:
@@ -230,7 +232,7 @@ class Structure:
         Cette fonction sert à montrer les paramètres de la structure afin d'obtenir un point initial pour l'optimisation.
 
         :return: les longueurs et les angles des éléments de notre structure.
-        :rtype: numpy ndarray
+        :rtype: ndarray
         """
         return self.longueur_segments, self.angles
 
@@ -238,6 +240,17 @@ class Structure:
         """
         Cette fonction sert à prendre des paramètres en entrée, à générer la structure à partir de ces paramètres puis à
         l'évaluer selon les critères choisis.
+
+        :param params: Liste des paramètres servant à redéfinir la structure.
+        :type params: ndarray
+        :param induit: Détermine si le courant est induit ou imposé.
+        :type induit: bool
+        :param b: Importance du poids dans le calcul.
+        :type b: float
+        :param tridimensionnel: Détermine si la structure est tridimensionnelle.
+        :type tridimensionnel: bool
+        :param biais: valeur de l'intensité de l'exposant du score.
+        :type biais: float
 
         :return: le score de la structure
         :rtype: float
@@ -415,7 +428,7 @@ class Structure:
 
         :param nom_a_donner: nom que le fichier va avoir.
         :type nom_a_donner: str
-        :param delimiteur: séparateur entre les données
+        :param delimiteur: séparateur entre les données.
         :type delimiteur: str
         """
         # Initialisation du nom
@@ -446,8 +459,24 @@ class Structure:
         np.savetxt(nom_points, points, delimiter=delimiteur)
         np.savetxt(nom_parametres, params, delimiter=delimiteur)
 
-    def charger(self, fichier, delimiteur = ","):
+    def charger(self, fichier, delimiteur = ",", induit = False, tridimensionnel = True, biais = 5):
+        """
+        Sert à charger les paramètres d'une structure précédente.
 
-        params = np.loadtxt(fichier, delimiter=delimiteur)
-
-        self.redefinir_parametres(params=params)
+        :param fichier: Nom du fichier à charger.
+        :type fichier: str
+        :param delimiteur: Séparateur entre les données.
+        :type delimiteur: str
+        :param induit: Détermine si le courant est induit ou imposé.
+        :type induit: bool
+        :param tridimensionnel: Détermine si la structure est tridimensionnelle.
+        :type tridimensionnel: bool
+        :param biais: valeur de l'intensité de l'exposant du score.
+        :type biais: float
+        """
+        # Définition du chemin
+        chemin = "Structures\\" + fichier
+        # Chargement des paramètres
+        params = np.loadtxt(chemin, delimiter=delimiteur)
+        # On applique les paramètres
+        self.redefinir_parametres(params=params, induit=induit, tridimensionnel=tridimensionnel, biais=biais)
