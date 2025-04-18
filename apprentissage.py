@@ -34,8 +34,6 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     :type tridimensionnel: bool
     :param induit: Indique si le champs magnétique est induit ou imposé.
     :type induit: bool
-    :param a: Exposant pour le score (encombrement).
-    :type a: float
     :param b: Exposant pour le score (poids).
     :type b: float
     :param biais: Facteur de biais pour le choix des structures.

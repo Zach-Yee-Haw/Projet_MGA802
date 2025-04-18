@@ -234,7 +234,7 @@ class Structure:
         """
         return self.longueur_segments, self.angles
 
-    def redefinir_parametres(self, params, induit = False, b = 1, tridimensionnel = True, biais = 5):
+    def redefinir_parametres(self, params, induit = False, b = 0.5, tridimensionnel = True, biais = 5):
         """
         Cette fonction sert à prendre des paramètres en entrée, à générer la structure à partir de ces paramètres puis à
         l'évaluer selon les critères choisis.
@@ -436,11 +436,18 @@ class Structure:
 
         # Génération des points
         points = self.montrer_points()
-        parametres = np.ndarray((self.nombre_points - 1, 3))
-        parametres[:, 0] = self.longueur_segments[:]
-        parametres[:, 1] = self.angles[:, 0]
-        parametres[:, 2] = self.angles[:, 1]
+        nb_segments = self.nombre_points - 1
+        params = np.ndarray((nb_segments * 3))
+        params[0:nb_segments] = self.longueur_segments
+        params[nb_segments:nb_segments * 2] = self.angles[:, 0]
+        params[nb_segments * 2:nb_segments * 3] = self.angles[:, 1]
 
         # Sauvegarde de la structure
         np.savetxt(nom_points, points, delimiter=delimiteur)
-        np.savetxt(nom_parametres, parametres, delimiter=delimiteur)
+        np.savetxt(nom_parametres, params, delimiter=delimiteur)
+
+    def charger(self, fichier, delimiteur = ","):
+
+        params = np.loadtxt(fichier, delimiter=delimiteur)
+
+        self.redefinir_parametres(params=params)
