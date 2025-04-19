@@ -32,8 +32,46 @@
 
           <div class="body" role="main">
             
-  <section id="apprentissage-module">
-<h1>apprentissage module<a class="headerlink" href="#apprentissage-module" title="Lien vers cette rubrique">¶</a></h1>
+  <section id="module-apprentissage">
+<span id="apprentissage-module"></span><h1>apprentissage module<a class="headerlink" href="#module-apprentissage" title="Lien vers cette rubrique">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="apprentissage.apprentissage">
+<span class="sig-prename descclassname"><span class="pre">apprentissage.</span></span><span class="sig-name descname"><span class="pre">apprentissage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nb_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">31</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_structures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_structures_a_garder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature_debut</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature_fin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encombrement_cible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tridimensionnel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">induit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biais</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plyfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apprentissage.apprentissage" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Fonction d’apprentissage pour optimiser des structures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nb_points</strong> (<em>int</em>) – Nombre de points par structure.</p></li>
+<li><p><strong>longueur_max</strong> (<em>float</em>) – Longueur maximale des segments d’une structure.</p></li>
+<li><p><strong>longueur_min</strong> (<em>float</em>) – Longueur minimale des segments d’une structure.</p></li>
+<li><p><strong>nb_structures</strong> (<em>int</em>) – Nombre total de structures à générer.</p></li>
+<li><p><strong>nb_structures_a_garder</strong> (<em>int</em>) – Nombre de structures à garder après chaque itération.</p></li>
+<li><p><strong>nb_iterations</strong> (<em>int</em>) – Nombre total d’itérations pour l’apprentissage.</p></li>
+<li><p><strong>temperature_debut</strong> (<em>float</em>) – Température initiale pour l’ajustement des paramètres.</p></li>
+<li><p><strong>temperature_fin</strong> (<em>float</em>) – Température finale pour l’ajustement des paramètres.</p></li>
+<li><p><strong>tridimensionnel</strong> (<em>bool</em>) – Indique si les structures sont tridimensionnelles.</p></li>
+<li><p><strong>induit</strong> (<em>bool</em>) – Indique si le champs magnétique est induit ou imposé.</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – Exposant pour le score (poids).</p></li>
+<li><p><strong>biais</strong> (<em>float</em>) – Facteur de biais pour le choix des structures.</p></li>
+<li><p><strong>plyfig</strong> (<em>figure plotly</em>) – Figure permettant de montrer la performance à l’utilisateur</p></li>
+<li><p><strong>figure</strong> (<em>figure plotly</em>) – figure montrant la structure actuelle</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Le meilleur score et la structure ayant obtenu ce score.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apprentissage.rd">
+<span class="sig-prename descclassname"><span class="pre">apprentissage.</span></span><span class="sig-name descname"><span class="pre">rd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apprentissage.rd" title="Lien vers cette définition">¶</a></dt>
+<dd><p>random() -&gt; x in the interval [0, 1).</p>
+</dd></dl>
+
 </section>
 
 

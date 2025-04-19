@@ -12,7 +12,6 @@ Pour accéder à la documentation, ouvrez build/html/index.html
 ## Objectifs du Code
 1. **Apprentissage des structures** : Générer et évaluer un ensemble de structures à travers plusieurs itérations d'apprentissage. Les meilleures structures sont conservées et modifiées pour itérer vers des solutions optimales.
 2. **Optimisation des structures** : Améliorer une structure donnée à l'aide de l'algorithme Nelder-Mead pour maximiser les performances spécifiques (force, encombrement, poids).
-3. **Visualisation** : Offrir une interface utilisateur interactive (via Streamlit) pour suivre les performances, visualiser les structures et évaluer les résultats.
 
 ---
 
@@ -30,16 +29,9 @@ Pour accéder à la documentation, ouvrez build/html/index.html
       git clone https://github.com/Zach-Yee-Haw/Projet_MGA802.git
       cd Projet_MGA802
 
-- Lancer l'application Streamlit :
-
-  - Ouvrez le fichier run.bat ou bien tapez la commande suivante :
-
-        streamlit run main.py
-  
 - Configurer les paramètres via l'interface utilisateur :
 
-  - Définir le nombre de points, les longueurs minimales et maximales, le nombre de structures, etc.
-  - Cliquer sur Démarrer apprentissage pour lancer le processus.
+  - Définir le nombre de points, l'encombrement désiré, le nombre de structures, etc.
   - (Optionnel) Activer l'optimisation pour améliorer les structures après l'apprentissage.
 
 - Visualisation des résultats :
@@ -84,11 +76,6 @@ Le code est organisé en plusieurs modules pour garantir la modularité et la li
   - Affinage des structures pour maximiser les performances.
   - Suivi des progrès de l'optimisation en temps réel.
 
-- Interface Interactive :
-
-  - Paramètres facilement ajustables via Streamlit.
-  - Visualisation 3D des structures en cours d'apprentissage ou d'optimisation.
-
 ## Contributions
 - Personnellement, je ne compte pas participer à d'autres modifications de ce projet.
 - Cependant, vous pouvez faire ce que vous voulez dans une version clonée du projet.
@@ -97,7 +84,7 @@ Le code est organisé en plusieurs modules pour garantir la modularité et la li
   - Vectoriser le calcul de force avec numpy dans structure.py.
   - Permettre à l’utilisateur de choisir une autre méthode d’optimisation.
   - Permettre à l’utilisateur de définir le matériau de la structure.
-  - Améliorer l’interface (bloquer entrées, montrer meilleure structure de chaque itération, mettre plus d’informations, etc.).
+  - Mettre à jour les figures plotly à chaque itération
   - Permettre à l’utilisateur de générer des boucles ou des embranchements.
 
 ## Licence

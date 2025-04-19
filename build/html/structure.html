@@ -36,7 +36,7 @@
 <span id="structure-module"></span><h1>structure module<a class="headerlink" href="#module-structure" title="Lien vers cette rubrique">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="structure.Structure">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">structure.</span></span><span class="sig-name descname"><span class="pre">Structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nombre_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_segments_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_segments_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tridimensionnel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure" title="Lien vers cette définition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">structure.</span></span><span class="sig-name descname"><span class="pre">Structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nombre_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_segments_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_segments_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encombrement_cible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tridimensionnel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure" title="Lien vers cette définition">¶</a></dt>
 <dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="structure.Structure.appliquer_limites">
@@ -79,6 +79,23 @@ pas le cas, à changer cette valeur afin qu’elle soit égale à la limite.</p>
 </dd>
 <dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="structure.Structure.charger">
+<span class="sig-name descname"><span class="pre">charger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fichier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiteur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">induit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tridimensionnel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biais</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.charger" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Sert à charger les paramètres d’une structure précédente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fichier</strong> (<em>str</em>) – Nom du fichier à charger.</p></li>
+<li><p><strong>delimiteur</strong> (<em>str</em>) – Séparateur entre les données.</p></li>
+<li><p><strong>induit</strong> (<em>bool</em>) – Détermine si le courant est induit ou imposé.</p></li>
+<li><p><strong>tridimensionnel</strong> (<em>bool</em>) – Détermine si la structure est tridimensionnelle.</p></li>
+<li><p><strong>biais</strong> (<em>float</em>) – valeur de l’intensité de l’exposant du score.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -128,7 +145,7 @@ pas le cas, à changer cette valeur afin qu’elle soit égale à la limite.</p>
 <dd class="field-odd"><p>les longueurs et les angles des éléments de notre structure.</p>
 </dd>
 <dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p>numpy ndarray</p>
+<dd class="field-even"><p>ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -139,10 +156,10 @@ pas le cas, à changer cette valeur afin qu’elle soit égale à la limite.</p>
 <dd><p>Cette fonction sert à fournir les indices de performance de notre structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>induit</strong> (<em>bool</em>) – Détermine si notre calcul de force est induit ou imposé</p>
+<dd class="field-odd"><p><strong>induit</strong> (<em>bool</em>) – Détermine si notre calcul de force est induit ou imposé.</p>
 </dd>
 <dt class="field-even">Renvoie<span class="colon">:</span></dt>
-<dd class="field-even"><p>Nos indices de performance</p>
+<dd class="field-even"><p>Nos indices de performance.</p>
 </dd>
 <dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
 <dd class="field-odd"><p>tuple</p>
@@ -166,15 +183,24 @@ pas le cas, à changer cette valeur afin qu’elle soit égale à la limite.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="structure.Structure.redefinir_parametres">
-<span class="sig-name descname"><span class="pre">redefinir_parametres</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">induit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tridimensionnel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biais</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.redefinir_parametres" title="Lien vers cette définition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">redefinir_parametres</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">induit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tridimensionnel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biais</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#structure.Structure.redefinir_parametres" title="Lien vers cette définition">¶</a></dt>
 <dd><p>Cette fonction sert à prendre des paramètres en entrée, à générer la structure à partir de ces paramètres puis à
 l’évaluer selon les critères choisis.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
-<dd class="field-odd"><p>le score de la structure</p>
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>ndarray</em>) – Liste des paramètres servant à redéfinir la structure.</p></li>
+<li><p><strong>induit</strong> (<em>bool</em>) – Détermine si le courant est induit ou imposé.</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – Importance du poids dans le calcul.</p></li>
+<li><p><strong>tridimensionnel</strong> (<em>bool</em>) – Détermine si la structure est tridimensionnelle.</p></li>
+<li><p><strong>biais</strong> (<em>float</em>) – valeur de l’intensité de l’exposant du score.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
-<dd class="field-even"><p>float</p>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>le score de la structure</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -187,7 +213,7 @@ l’évaluer selon les critères choisis.</p>
 <dt class="field-odd">Paramètres<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>nom_a_donner</strong> (<em>str</em>) – nom que le fichier va avoir.</p></li>
-<li><p><strong>delimiteur</strong> (<em>str</em>) – séparateur entre les données</p></li>
+<li><p><strong>delimiteur</strong> (<em>str</em>) – séparateur entre les données.</p></li>
 </ul>
 </dd>
 </dl>

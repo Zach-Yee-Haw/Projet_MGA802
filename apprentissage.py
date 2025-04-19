@@ -86,7 +86,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
         score_max_cumule.append(score_max)
         score_min_cumule.append(score_min)
 
-        # print("Itération : ", str(i), ", score max : ", str(score_max), ", score_min : ", str(score_min))
+        print("Itération : ", str(i), ", score max : ", str(score_max), ", score_min : ", str(score_min))
 
         # Tri des structures en fonction des scores
         structures_triees = trier(structures, nb_structures)
