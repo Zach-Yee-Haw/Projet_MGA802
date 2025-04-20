@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 
 def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_structures = 10,
                   nb_structures_a_garder = 4, nb_iterations = 10, temperature_debut = 0.5,
-                  temperature_fin = 0.2, tridimensionnel = True, induit = False, a = 0.5, b = 0.5, biais = 4,
+                  temperature_fin = 0.2, encombrement_cible = 500, tridimensionnel = True, induit = False, b = 0.5, biais = 4,
                   plyfig = None, barre_de_progression = None, espace_graph = None, figure = None, espace_structure = None):
     """
     Fonction d'apprentissage pour optimiser des structures.
@@ -34,8 +34,6 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     :type tridimensionnel: bool
     :param induit: Indique si le champs magnétique est induit ou imposé.
     :type induit: bool
-    :param a: Exposant pour le score (encombrement).
-    :type a: float
     :param b: Exposant pour le score (poids).
     :type b: float
     :param biais: Facteur de biais pour le choix des structures.
@@ -65,7 +63,6 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
 
     # Calcul de la proportion des structures à conserver
     proportion_structure_a_garder = nb_structures_a_garder/nb_structures
-    nb_structures = int(nb_structures_a_garder/proportion_structure_a_garder)
     structures = np.ndarray((nb_structures, 2), dtype=object)
 
     # Calcul de l'exposant pour la décroissance de la température
@@ -76,7 +73,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
     # Génération des structures initiales
     for i in tqdm(range(nb_structures)):
         barre_de_progression.progress(i/(nb_structures-1), text="Itération no. : 0, Progrès : "+str(i+1)+"/"+str(nb_structures))
-        structure = St(nb_points, longueur_max, longueur_min, tridimensionnel, "Structure no. " + str(i))
+        structure = St(nb_points, longueur_max, longueur_min, encombrement_cible, tridimensionnel, "Structure no. " + str(i))
         structures[i, 1] = structure
 
     # Initialisation de la meilleure structure (score et objet structure)
@@ -92,7 +89,7 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
         # Calcul des scores pour chaque structure
         for j in range(nb_structures):
             scores = structures[j, 1].montrer_performance(induit)
-            score = scores[2] / (scores[0] ** a * scores[1] ** b)
+            score = scores[2] / (scores[1] ** b)
             structures[j, 0] = score
 
         # Enregistrement des scores maximum et minimum
@@ -114,17 +111,6 @@ def apprentissage(nb_points = 31, longueur_max = 100, longueur_min = 100, nb_str
         enc, poi, force = meilleure_structure[1].montrer_performance()
         titre = ("Score : " + str(meilleure_structure[0]) + ", Encombrement = " + str(enc) + ", poids = " + str(poi) +
                  ", force = " + str(force) + ".")
-
-
-        # Réinitialisation de la figure
-        figure.data = []
-
-        # Ajout du satellite dans la figure
-        figure.add_trace(go.Scatter3d(
-            x=[0], y=[0], z=[0],
-            marker=dict(size=4,
-                        color="red"),
-                        name="Satellite"))
 
         # Ajout de la structure dans la figure
         meilleure_structure[1].visualiser_structure(figure, titre)

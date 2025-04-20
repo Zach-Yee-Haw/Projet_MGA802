@@ -43,6 +43,7 @@ structure = St()
 with col1:
     nb_points = st.number_input('Nombre de points dans la structure : ', min_value=2, value=31)
     longueur_min = st.number_input('Longueur minimale des segments : ', min_value=0.0, value=100.0)
+    encombrement_cible = st.number_input('Valeur cible de l\'encombrement : ', min_value=0.0, value=500.0)
     longueur_max = st.number_input('Longueur maximale des segments : ', min_value=0.0, value=100.0)
     nb_structures = st.number_input('Nombre de structures à générer par itération : ', min_value=1, value=10)
     nb_structures_a_garder = st.number_input('Nombre de structures à garder par itération : ', min_value=1, value=4)
@@ -51,7 +52,6 @@ with col1:
     temperature_fin = st.number_input('Température finale : ', min_value=0.0, max_value=1.0, value=0.2)
     tridimensionnel = st.checkbox('Structure tridimensionnelle', value=True)
     induit = st.checkbox('Champs induit', value=False)
-    a = st.number_input('Importance de l\'encombrement dans le calcul du score : ', min_value=0.0, value=0.5)
     b = st.number_input('Importance du poids dans le calcul du score : ', min_value=0.0, value=0.5)
     biais = st.number_input('Biais de sélection des structures : ', min_value=1, value=4)
     optimiser = st.checkbox('Optimiser la structure après l\'apprentissage', value=True)
@@ -70,19 +70,9 @@ with col2:
         # Lancer le processus d'apprentissage
         score, structure = apprentissage(nb_points, longueur_max, longueur_min, nb_structures,
                       nb_structures_a_garder, nb_iterations, temperature_debut,
-                      temperature_fin, tridimensionnel, induit, a, b, biais,
+                      temperature_fin, encombrement_cible, tridimensionnel, induit, b, biais,
                       plyfig = performances_graph, barre_de_progression = barre_de_progression,
                       espace_graph=espace_performance, figure=structure_apprentissage_graph, espace_structure=espace_apprentissage)
-
-        # Réinitialisation de la figure pour la visualisation
-        structure_apprentissage_graph.data = []
-
-        # Ajout d'un point pour le satellite dans la visualisation
-        structure_apprentissage_graph.add_trace(go.Scatter3d(
-            x=[0], y=[0], z=[0],
-            marker=dict(size=4,
-                        color="red"),
-            name="Satellite"))
 
         # Afficher les performances de la structure après apprentissage
         enc, poi, force = structure.montrer_performance()
@@ -95,20 +85,10 @@ with col2:
         # Si l'optimisation est activée, lancer le processus d'optimisation
         if optimiser == True:
             barre_de_progression.progress(100,text="Optimisation en cours...")
-            score, structure_optimisee = optimisation(structure, induit=induit, a=a, b=b, tridimensionnel=tridimensionnel,
+            score, structure_optimisee = optimisation(structure, induit=induit, b=b, tridimensionnel=tridimensionnel,
                                                         nb_iterations=nb_iterations_optimisation, tolerance = tolerance,
                                                         barre_de_progression=barre_de_progression, figure=structure_optimisee_graph,
                                                         espace=espace_optimisation)
-
-            # Réinitialisation de la figure pour la visualisation
-            structure_optimisee_graph.data = []
-
-            # Ajout d'un point pour le satellite dans la visualisation
-            structure_optimisee_graph.add_trace(go.Scatter3d(
-                x=[0], y=[0], z=[0],
-                marker=dict(size=4,
-                            color="red"),
-                name="Satellite"))
 
             # Afficher les performances de la structure optimisée
             enc, poi, force = structure_optimisee.montrer_performance()
