@@ -100,8 +100,11 @@ with col2:
         # Mettre à jour la barre de progression pour indiquer l'enregistrement'
         barre_de_progression.progress(100, text="Enregistrement en cours...")
 
-        # Enregistrement de la structure
-        structure_optimisee.sauvegarde()
+        # Enregistrement de la structure (avant et après optimisation)
+        if optimiser == True:
+            structure_optimisee.sauvegarde("Structure_optimisee")
+        else:
+            structure.sauvegarde()
 
         # Mettre à jour la barre de progression pour indiquer la fin'
         barre_de_progression.progress(100, text="Terminé !")
